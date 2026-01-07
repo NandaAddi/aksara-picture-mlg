@@ -1,28 +1,13 @@
-// --- CONFIGURATION & DATA ---
 
-const tailwindConfig = {
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Manrope', 'sans-serif'],
-                serif: ['Playfair Display', 'serif'],
-            },
-            colors: {
-                'studio-black': '#0a0a0a',
-                'studio-gray': '#1c1c1c',
-                'studio-white': '#f5f5f5',
-                'studio-gold': '#d4af37',
-            }
-        }
-    }
-};
 
 // --- SUPABASE CONFIG ---
 const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
 
-// PENTING: Ganti nama variabel jadi 'sb' agar tidak bentrok dengan library
+// VARIABLE GLOBAL
 let sb; 
+let lenis; // Wajib global agar bisa diakses fungsi navigasi & modal
+let projectsData = {}; 
 
 try {
     // Cek apakah library sudah load di window
@@ -35,33 +20,52 @@ try {
     console.error("Supabase fail:", e);
 }
 
-// Variable global untuk menyimpan data project
-let projectsData = {}; 
+// --- CORE FUNCTIONS ---
 
-// Function Fetch Data
+// Function Fetch Data (DENGAN SKELETON LOADING "LUXURY")
 async function loadProjects() {
-    // Gunakan 'sb' bukan 'supabase'
+    const gridContainer = document.getElementById('portfolio-grid');
+
+    // --- SKELETON LOADING START ---
+    // Daripada teks biasa, kita buat kotak-kotak palsu yang berkedip
+    if(gridContainer) {
+        let skeletonHTML = '';
+        // Kita buat 6 kotak skeleton (angka genap agar rapi di grid)
+        for(let i = 0; i < 6; i++) {
+            skeletonHTML += `
+            <div class="aspect-[3/4] bg-gray-900 animate-pulse relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 translate-x-[-100%] animate-[shimmer_1.5s_infinite]"></div>
+                
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-4 opacity-50">
+                    <div class="w-16 h-2 bg-gray-700 rounded mb-4"></div> <div class="w-32 h-6 bg-gray-700 rounded"></div>      </div>
+            </div>`;
+        }
+        gridContainer.innerHTML = skeletonHTML;
+    }
+    // --- SKELETON LOADING END ---
+
     if (!sb || SUPABASE_URL.includes('MASUKAN_URL')) {
-        console.warn("Supabase belum disetting atau gagal load. Portfolio dinamis tidak akan muncul.");
+        console.warn("Supabase belum disetting. Portfolio dinamis tidak akan muncul.");
         return;
     }
 
     try {
-        // 1. Ambil data Projects (Gunakan 'sb')
+        // 1. Ambil data Projects
         const { data: projData, error: projError } = await sb
             .from('projects')
-            .select('*');
+            .select('*')
+            .order('created_at', { ascending: true }); // Tetap urut dari Lama ke Baru
 
         if (projError) throw projError;
 
-        // 2. Ambil data Images (Gunakan 'sb')
+        // 2. Ambil data Images
         const { data: imgData, error: imgError } = await sb
             .from('project_images')
             .select('*');
 
         if (imgError) throw imgError;
 
-        // 3. Gabungkan data (Mapping)
+        // 3. Mapping Data
         if (projData) {
             projData.forEach(proj => {
                 const relatedImages = imgData
@@ -78,44 +82,87 @@ async function loadProjects() {
                 };
             });
             
-            // 4. Render Grid Portfolio
+            // 4. Render Grid (Skeleton akan otomatis tertimpa oleh data asli di sini)
             renderPortfolioGrid(projData, imgData);
         }
 
     } catch (err) {
         console.error("Gagal load portfolio:", err);
+        if(gridContainer) gridContainer.innerHTML = '<div class="col-span-full text-center text-red-500">Gagal memuat data.</div>';
     }
 }
-
-// Function render thumbnail
+// --- OPTIMIZED RENDER FUNCTION (FIXED: Auto Show Items) ---
 function renderPortfolioGrid(projList, imgList) {
     const gridContainer = document.getElementById('portfolio-grid');
     if (!gridContainer) return;
     
-    gridContainer.innerHTML = ''; 
+    // Performance: Gunakan Buffer String
+    let cardsHtml = ''; 
 
-    projList.forEach(proj => {
+    projList.forEach((proj, index) => {
         const thumb = imgList.find(img => img.project_id === proj.id);
-        const thumbUrl = thumb ? thumb.image_url : 'placeholder.jpg';
+        const thumbUrl = thumb ? thumb.image_url : 'placeholder.jpg'; 
 
-        const html = `
-            <div class="portfolio-item group cursor-pointer relative bg-gray-800 aspect-[3/4]" 
-                 data-category="${proj.category.toLowerCase()}" 
-                 onclick="openProject('${proj.slug}')">
-                <img src="${thumbUrl}" class="w-full h-full object-cover block" loading="lazy">
-                <div class="absolute inset-0 portfolio-overlay flex items-center justify-center">
-                    <span class="font-serif italic text-2xl text-white">${proj.title}</span>
+        // SEO: Dynamic Alt Text
+        const altText = `${proj.title} - Foto ${proj.category} Malang by Aksara Picture`;
+
+        // HAPUS style "animation: fadeIn" manual.
+        // Kita serahkan urusan animasi sepenuhnya ke GSAP di bawah.
+        // Set default opacity 0 agar transisi filter terlihat mulus.
+        
+        cardsHtml += `
+            <div class="portfolio-item group cursor-pointer relative bg-gray-800 aspect-[3/4] overflow-hidden opacity-0 scale-95 hidden" 
+                 data-category="${proj.category.toLowerCase()}"
+                 data-slug="${proj.slug}" 
+                 onclick="openProject(this.dataset.slug)">
+                
+                <img src="${thumbUrl}" 
+                     alt="${altText}" 
+                     class="w-full h-full object-cover block transform transition duration-700 group-hover:scale-110" 
+                     loading="lazy"
+                     width="600" height="800">
+                
+                <div class="absolute inset-0 portfolio-overlay flex flex-col items-center justify-center text-center p-4">
+                     <span class="text-xs text-studio-gold tracking-widest uppercase mb-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                        ${proj.category}
+                    </span>
+                    <span class="font-serif italic text-2xl text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+                        ${proj.title}
+                    </span>
                 </div>
             </div>
         `;
-        gridContainer.innerHTML += html;
     });
+
+    // 1. Masukkan HTML ke DOM
+    gridContainer.innerHTML = cardsHtml;
+    
+    // 2. [SOLUSI UTAMA] Paksa jalankan filter 'all' secara otomatis!
+    // Ini akan memicu GSAP untuk mengubah opacity 0 -> 1
+    // Kita beri sedikit delay (setTimeout 50ms) agar DOM benar-benar siap
+    setTimeout(() => {
+        // Cek tombol mana yang sedang aktif (misal user refresh saat filter wedding aktif)
+        const activeBtn = document.querySelector('.filter-btn.active');
+        const currentCategory = activeBtn ? activeBtn.textContent.toLowerCase() : 'all';
+        
+        filterSelection(currentCategory);
+    }, 100);
+
+    // Refresh ScrollTrigger
+    if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 }
 
-// Update fungsi openProject
+// Function Open Project (FIXED)
 function openProject(projectSlug) {
+    // Reset animasi lama
+    const modal = document.getElementById('project-modal');
+    gsap.killTweensOf(modal);
+
     const project = projectsData[projectSlug]; 
-    if (!project) return;
+    if (!project) {
+        console.error("Project not found:", projectSlug);
+        return;
+    }
 
     const titleEl = document.getElementById('modal-title');
     const catEl = document.getElementById('modal-category');
@@ -130,27 +177,47 @@ function openProject(projectSlug) {
     project.images.forEach(img => {
         const div = document.createElement('div');
         div.className = `w-full ${img.aspect} bg-gray-800 overflow-hidden relative`;
-        div.innerHTML = `<img src="${img.src}" class="w-full h-full object-cover" loading="lazy" decoding="async">`;
+        // SEO: Alt text detail
+        div.innerHTML = `<img src="${img.src}" alt="${project.title} detail - Aksara Picture" class="w-full h-full object-cover" loading="lazy" decoding="async">`;
         fragment.appendChild(div);
     });
 
     galleryContainer.innerHTML = ''; 
     galleryContainer.appendChild(fragment);
 
-    const modal = document.getElementById('project-modal');
     modal.classList.remove('hidden');
+
+    // FIX SCROLL: Stop Lenis saat modal buka
+    if(lenis) lenis.stop(); 
+    
     gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.4 });
-    gsap.fromTo("#modal-gallery > div", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, delay: 0.2 });
+    
+    const galleryDivs = document.querySelectorAll("#modal-gallery > div");
+    gsap.killTweensOf(galleryDivs);
+    gsap.fromTo(galleryDivs, 
+        { y: 50, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, delay: 0.2 }
+    );
 }
 
+// Function Close Project
 function closeProject() {
     const modal = document.getElementById('project-modal');
-    gsap.to(modal, { opacity: 0, duration: 0.3, onComplete: () => modal.classList.add('hidden') });
+    
+    gsap.to(modal, { 
+        opacity: 0, 
+        duration: 0.3, 
+        onComplete: () => { 
+            modal.classList.add('hidden');
+            // FIX SCROLL: Jalankan Lenis lagi saat modal tutup
+            if(lenis) lenis.start();
+        } 
+    });
 }
 
-// --- LOGIC FUNCTIONS ---
+// --- UI LOGIC ---
 
-// 1. Navigation
+// 1. Navigation (Dengan Lenis Integration)
 function navigateTo(pageId) {
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
@@ -166,15 +233,24 @@ function navigateTo(pageId) {
     if(currentSection) {
         gsap.to(currentSection, {
             opacity: 0,
-            duration: 0.3,
+            duration: 0.5,
+            ease: "power2.inOut",
             onComplete: () => {
                 currentSection.classList.remove('active');
                 if(targetSection) {
+                    
+                    // FIX: Reset Scroll Instan via Lenis
+                    if (lenis) {
+                        lenis.scrollTo(0, { immediate: true });
+                    } else {
+                        window.scrollTo(0,0);
+                    }
+
                     targetSection.classList.add('active');
-                    window.scrollTo(0,0);
+                    
                     gsap.fromTo(targetSection, 
-                        { opacity: 0, y: 20 },
-                        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+                        { opacity: 0, y: 30 },
+                        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.1 }
                     );
                 }
             }
@@ -206,6 +282,8 @@ function filterSelection(category) {
             gsap.to(item, { opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => { item.style.display = 'none'; }});
         }
     });
+    
+    if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 }
 
 // 3. Mobile Menu
@@ -272,19 +350,37 @@ function startHeroSlideshow() {
 
 // --- INITIALIZATION ---
 window.addEventListener('load', () => {
-    // Config Tailwind
-    if(typeof tailwind !== 'undefined') {
-        tailwind.config = tailwindConfig;
+
+
+    // --- LENIS SETUP ---
+    if (typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+            duration: 1.2, // Balance antara smooth & responsive
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true,
+            direction: 'vertical', 
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+        
+        console.log("Lenis Active");
+    } else {
+        console.warn("Lenis library not loaded");
     }
-    
-    // Inisialisasi Tampilan Awal
+
+    // Initial View
     const homeSection = document.getElementById("home");
     if(homeSection) {
+        if(lenis) lenis.scrollTo(0, { immediate: true });
         gsap.fromTo("#home", { opacity: 0 }, { opacity: 1, duration: 1 });
     }
 
     startHeroSlideshow();
-    
-    // Load Database Belakangan
     loadProjects(); 
 });
