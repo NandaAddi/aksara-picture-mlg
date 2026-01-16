@@ -44,17 +44,18 @@ async function loadProjects() {
     }
     // --- SKELETON LOADING END ---
 
-    if (!sb || SUPABASE_URL.includes('MASUKAN_URL')) {
+if (!sb || SUPABASE_URL.includes('MASUKAN_URL')) {
         console.warn("Supabase belum disetting. Portfolio dinamis tidak akan muncul.");
         return;
     }
 
     try {
         // 1. Ambil data Projects
+        // PENTING: Di sini kita mengurutkan berdasarkan 'sort_order' (posisi drag & drop)
         const { data: projData, error: projError } = await sb
             .from('projects')
             .select('*')
-            .order('created_at', { ascending: true }); // Tetap urut dari Lama ke Baru
+            .order('sort_order', { ascending: true }); // <--- INI KUNCINYA
 
         if (projError) throw projError;
 
@@ -67,6 +68,9 @@ async function loadProjects() {
 
         // 3. Mapping Data
         if (projData) {
+            // Bersihkan data lama jika perlu (tergantung logika aplikasi Anda)
+            // projectsData = {}; 
+
             projData.forEach(proj => {
                 const relatedImages = imgData
                     .filter(img => img.project_id === proj.id)
@@ -75,6 +79,7 @@ async function loadProjects() {
                         aspect: img.aspect_ratio
                     }));
 
+                // Simpan ke variable global projectsData (sesuai kode asli Anda)
                 projectsData[proj.slug] = {
                     title: proj.title,
                     category: proj.category,
@@ -82,7 +87,8 @@ async function loadProjects() {
                 };
             });
             
-            // 4. Render Grid (Skeleton akan otomatis tertimpa oleh data asli di sini)
+            // 4. Render Grid
+            // Karena projData sudah urut dari langkah no 1, maka renderPortfolioGrid juga akan urut
             renderPortfolioGrid(projData, imgData);
         }
 
@@ -123,10 +129,10 @@ function renderPortfolioGrid(projList, imgList) {
                      width="600" height="800">
                 
                 <div class="absolute inset-0 portfolio-overlay flex flex-col items-center justify-center text-center p-4">
-                     <span class="text-xs text-studio-gold tracking-widest uppercase mb-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                     <span class="text-xs text-studio-gold tracking-widest uppercase mb-2 overlay-text">
                         ${proj.category}
                     </span>
-                    <span class="font-serif italic text-2xl text-white translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+                    <span class="font-serif italic text-2xl text-white overlay-text delay-100">
                         ${proj.title}
                     </span>
                 </div>
@@ -310,14 +316,29 @@ function toggleMobileMenu() {
     }
 }
 
-// 4. Terms Modal
+// 4. Terms Modal (Updated Fix Scroll)
 function toggleTerms() {
     const modal = document.getElementById('terms-modal');
+    
     if (modal.classList.contains('hidden')) {
+        // Saat Buka Modal
         modal.classList.remove('hidden');
-        gsap.fromTo(modal.children[1], { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
+        if(lenis) lenis.stop(); // STOP scroll halaman belakang
+        
+        gsap.fromTo(modal.children[1], 
+            { scale: 0.95, opacity: 0 }, 
+            { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }
+        );
     } else {
-        gsap.to(modal.children[1], { scale: 0.95, opacity: 0, duration: 0.2, onComplete: () => modal.classList.add('hidden') });
+        // Saat Tutup Modal
+        if(lenis) lenis.start(); // JALANKAN lagi scroll halaman belakang
+        
+        gsap.to(modal.children[1], { 
+            scale: 0.95, 
+            opacity: 0, 
+            duration: 0.2, 
+            onComplete: () => modal.classList.add('hidden') 
+        });
     }
 }
 

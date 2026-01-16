@@ -1910,4 +1910,44 @@ html.lenis, html.lenis body {
     font-size: 1rem;
     line-height: 1.5rem;
   }
+
+  /* --- FIX PORTFOLIO HOVER --- */
+
+/* 1. Container Overlay */
+/* Pastikan flexbox aktif untuk menengahkan teks */
+.portfolio-overlay {
+  background: rgba(0, 0, 0, 0.6); /* Sedikit lebih gelap agar teks terbaca */
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20; /* Pastikan di atas gambar */
+}
+
+/* Saat hover di item, munculkan overlay */
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+/* 2. Animasi Teks (Slide Up) */
+/* Default state: Turun sedikit (20px) dan transparan */
+.overlay-text {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Saat hover: Naik ke posisi normal (0) dan muncul */
+.portfolio-item:hover .overlay-text {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Delay sedikit untuk judul agar efeknya berurutan */
+.overlay-text.delay-100 {
+  transition-delay: 0.1s;
+}
+
 }
