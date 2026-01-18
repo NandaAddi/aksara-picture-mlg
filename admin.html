@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'none';
+    frame-src 'self' https://rgeshbeiweqnnkbhgoya.supabase.co;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://unpkg.com;
+    style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+    font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;
+    img-src 'self' data: blob: https:;
+    connect-src 'self' https://rgeshbeiweqnnkbhgoya.supabase.co;
+">
     <title>Aksara Admin Panel</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -104,7 +116,7 @@
     <div id="loginScreen" class="w-[90%] md:w-full max-w-md mx-auto glass-panel p-6 md:p-10 rounded-2xl shadow-2xl animate-slide-up z-50 relative overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-studio-gold to-transparent opacity-50"></div>
         <div class="text-center mb-8 md:mb-10">
-            <h1 class="font-serif text-3xl md:text-4xl italic text-white mb-2 tracking-wide">Aksara<span class="text-studio-gold">.</span></h1>
+            <h1 class="font-serif text-3xl md:text-4xl italic text-white mb-2 tracking-wide">Aksara<span class="text-studio-gold"> Picture</span></h1>
             <p class="text-[10px] text-gray-500 uppercase tracking-[0.3em]">Authorized Personnel Only</p>
         </div>
         <div class="space-y-6">
@@ -127,7 +139,7 @@
                 <div class="flex items-center gap-3 md:gap-4">
                     <div class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-studio-gold to-[#8f7520] flex items-center justify-center text-black font-serif italic font-bold text-lg md:text-xl shadow-lg">A</div>
                     <div>
-                        <span class="font-serif italic text-xl md:text-2xl text-white block leading-none">Aksara.</span>
+                        <span class="font-serif italic text-xl md:text-2xl text-white block leading-none">Aksara Picture</span>
                         <span class="text-[8px] md:text-[9px] text-gray-500 uppercase tracking-widest hidden md:block">Admin Panel</span>
                     </div>
                 </div>
