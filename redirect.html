@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting | Aksara Picture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 'studio-gold': '#d4af37', 'studio-black': '#050505' },
+                    keyframes: {
+                        shimmer: { '0%': { transform: 'translateY(100%)' }, '100%': { transform: 'translateY(-100%)' } },
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #050505; color: white; overflow: hidden; }
+    </style>
+</head>
+<body>
+
+    <div id="redirect-overlay" class="fixed inset-0 z-50 bg-[#050505] flex flex-col items-center justify-center">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_#050505_70%)] opacity-80"></div>
+        
+        <div class="relative z-10 flex flex-col items-center animate-fade-in-up">
+            <div class="relative mb-8">
+                <div class="absolute inset-0 bg-studio-gold blur-xl opacity-20 animate-pulse"></div>
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-studio-gold to-[#8f7520] flex items-center justify-center shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-white/20 translate-y-full animate-[shimmer_2s_infinite]"></div>
+                    <span class="font-serif italic font-bold text-3xl md:text-4xl text-black">A</span>
+                </div>
+            </div>
+
+            <h2 class="font-serif text-2xl md:text-3xl italic text-white mb-2 tracking-wide">Aksara<span class="text-studio-gold">.</span></h2>
+            
+            <div class="flex flex-col items-center gap-3 mt-4">
+                <p id="redirect-status" class="text-[10px] uppercase tracking-[0.3em] text-studio-gold font-bold">Connecting</p>
+                <div class="w-32 h-0.5 bg-white/10 rounded-full overflow-hidden">
+                    <div id="redirect-bar" class="w-0 h-full bg-studio-gold transition-all duration-700 ease-out"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        (async function() {
+            // 1. Deteksi Slug
+            const path = window.location.pathname.replace('/', '');
+            const statusText = document.getElementById('redirect-status');
+            const progressBar = document.getElementById('redirect-bar');
+            
+            // Animasi Awal
+            setTimeout(() => progressBar.style.width = '30%', 50);
+
+            // 2. Setup Supabase
+            const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
+            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
+            const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+            try {
+                // 3. Query Database
+                statusText.innerText = "Locating Destination...";
+                const { data, error } = await sb
+                    .from('shortlinks')
+                    .select('original_url, clicks, id')
+                    .eq('slug', path)
+                    .single();
+
+                if (data && data.original_url) {
+                    // FOUND!
+                    statusText.innerText = "Redirecting...";
+                    progressBar.style.width = '100%';
+                    
+                    // Increment click
+                    sb.from('shortlinks').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id).then();
+
+                    setTimeout(() => {
+                        window.location.replace(data.original_url);
+                    }, 800); 
+                } else {
+                    // NOT FOUND -> Lempar ke Homepage (index.html)
+                    statusText.innerText = "Link Not Found";
+                    statusText.style.color = '#ef4444'; // Merah
+                    progressBar.style.backgroundColor = '#ef4444';
+                    progressBar.style.width = '100%';
+                    
+                    setTimeout(() => {
+                        window.location.replace('/'); // Kembali ke index.html
+                    }, 1500);
+                }
+            } catch (err) {
+                window.location.replace('/');
+            }
+        })();
+    </script>
+</body>
+</html>
