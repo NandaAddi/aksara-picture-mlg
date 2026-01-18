@@ -1,57 +1,38 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Redirecting... | Aksara Studio</title>
+    <title>Aksara Studio | Redirecting...</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body style="background: #050505; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; margin: 0;">
-    
-    <div style="text-align: center;">
-        <div style="border: 3px solid #d4af37; border-top: 3px solid transparent; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-        <p style="letter-spacing: 2px; font-size: 12px; color: #666;">REDIRECTING...</p>
-    </div>
-
-    <style>
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-       const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
+<body style="background:#050505; color:white; display:flex; justify-content:center; align-items:center; height:100vh;">
+    <p>Redirecting...</p>
+    <script>
+const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    async function handleRedirect() {
-        // Ambil kode dari path (mengambil kata setelah /s/)
-        const pathArray = window.location.pathname.split('/');
-        const code = pathArray[pathArray.length - 1] || new URLSearchParams(window.location.search).get('c');
+        async function handle() {
+            // Ambil slug dari URL (misal: /s/driveee -> driveee)
+            const pathParts = window.location.pathname.split('/');
+            const code = pathParts[pathParts.length - 1];
 
-        if (!code || code === 's') {
-            window.location.href = '/';
-            return;
+            if (!code || code === 's') {
+                window.location.href = '/';
+                return;
+            }
+
+            const { data } = await sb.from('short_links').select('*').eq('short_code', code).single();
+
+            if (data) {
+                // Tambah klik & lempar ke URL asli
+                await sb.from('short_links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id);
+                window.location.href = data.original_url;
+            } else {
+                console.log("Link tidak ditemukan");
+                window.location.href = '/';
+            }
         }
-
-        const { data, error } = await sb
-            .from('short_links')
-            .select('*')
-            .eq('short_code', code)
-            .single();
-
-        if (data) {
-            // Update klik
-            await sb.from('short_links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id);
-            // Redirect
-            window.location.href = data.original_url;
-        } else {
-            window.location.href = '/';
-        }
-    }
-    handleRedirect();
-</script>
+        handle();
+    </script>
 </body>
 </html>
-
-
-
-
