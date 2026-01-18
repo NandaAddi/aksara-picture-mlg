@@ -1,52 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Redirecting...</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body style="background: #050505; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
-    <div style="text-align: center;">
-        <p>Redirecting to your destination...</p>
-    </div>
+<script>
+    // Gunakan konfigurasi yang sama dengan admin.html
+    const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
+    const SUPABASE_KEY = 'YOUR_ANON_KEY_KAMU'; 
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    <script>
-const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
-        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    async function doRedirect() {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('c');
 
-        async function handleRedirect() {
-            // Ambil kode dari URL (misal: go.html?c=promo)
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('c');
-
-            if (!code) {
-                window.location.href = '/';
-                return;
-            }
-
-            // 1. Cari URL asli di database
-            const { data, error } = await sb
-                .from('short_links')
-                .select('original_url, clicks')
-                .eq('short_code', code)
-                .single();
-
-            if (data) {
-                // 2. Update jumlah klik secara async (increment)
-                await sb
-                    .from('short_links')
-                    .update({ clicks: data.clicks + 1 })
-                    .eq('short_code', code);
-
-                // 3. Alihkan ke URL tujuan
-                window.location.href = data.original_url;
-            } else {
-                console.error("Link not found");
-                window.location.href = '/';
-            }
+        if (!code) {
+            console.error("Tidak ada kode ditemukan di URL");
+            window.location.href = 'https://aksara-picture-mlg.vercel.app/';
+            return;
         }
 
-        handleRedirect();
-    </script>
-</body>
-</html>
+        // Ambil data dari tabel short_links
+        const { data, error } = await sb
+            .from('short_links')
+            .select('*')
+            .eq('short_code', code)
+            .single();
+
+        if (error || !data) {
+            console.error("Link tidak ditemukan di database:", error);
+            // Jika error, kembali ke home
+            window.location.href = 'https://aksara-picture-mlg.vercel.app/';
+            return;
+        }
+
+        // Update jumlah klik secara background
+        await sb.rpc('increment_clicks', { row_id: data.id }).catch(() => {
+            // Jika rpc gagal, pakai update biasa
+            sb.from('short_links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id);
+        });
+
+        // Redirect ke link asli
+        window.location.href = data.original_url;
+    }
+
+    doRedirect();
+</script>
