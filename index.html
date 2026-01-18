@@ -33,6 +33,35 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+    // Redirect Logic untuk Aksara Shortlink
+    (async function() {
+        const path = window.location.pathname.replace('/', ''); // Ambil slug, misal 'wa'
+        if (!path || path === 'admin' || path === '') return; // Abaikan home & admin
+
+        // Inisialisasi Supabase (Gunakan Key Anon yang sama dengan Admin Panel)
+        const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Cari di database
+        const { data, error } = await sb
+        .from('shortlinks')
+        .select('original_url, clicks, id')
+        .eq('slug', path)
+        .single();
+
+        if (data && data.original_url) {
+        // Increment click count (optional, non-blocking)
+        await sb.from('shortlinks').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id);
+        
+        // Lakukan Redirect
+        window.location.href = data.original_url;
+        } 
+        // Jika tidak ditemukan, biarkan halaman loading normal (404 handling)
+    })();
+    </script>
 
     <script type="application/ld+json">
     {
