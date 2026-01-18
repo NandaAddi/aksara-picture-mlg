@@ -1,0 +1,33 @@
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+       const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function handleRedirect() {
+        // Ambil kode dari path (mengambil kata setelah /s/)
+        const pathArray = window.location.pathname.split('/');
+        const code = pathArray[pathArray.length - 1] || new URLSearchParams(window.location.search).get('c');
+
+        if (!code || code === 's') {
+            window.location.href = '/';
+            return;
+        }
+
+        const { data, error } = await sb
+            .from('short_links')
+            .select('*')
+            .eq('short_code', code)
+            .single();
+
+        if (data) {
+            // Update klik
+            await sb.from('short_links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id);
+            // Redirect
+            window.location.href = data.original_url;
+        } else {
+            window.location.href = '/';
+        }
+    }
+    handleRedirect();
+</script>
