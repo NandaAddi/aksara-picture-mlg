@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>Aksara Studio | Redirecting...</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body style="background:#050505; color:white; display:flex; justify-content:center; align-items:center; height:100vh;">
-    <p>Redirecting...</p>
+<body style="background:#050505; color:white; display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif;">
+    <div style="text-align:center;">
+        <p style="letter-spacing:3px; font-size:10px; color:#d4af37;">REDIRECTING</p>
+    </div>
+
     <script>
-const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
-        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+        const sb = supabase.createClient('https://rgeshbeiweqnnkbhgoya.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4');
+        // --- CONFIG ---
         async function handle() {
-            // Ambil slug dari URL (misal: /s/driveee -> driveee)
             const pathParts = window.location.pathname.split('/');
-            const code = pathParts[pathParts.length - 1];
+            const code = pathParts[pathParts.length - 1] || pathParts[pathParts.indexOf('s') + 1];
 
-            if (!code || code === 's') {
-                window.location.href = '/';
-                return;
-            }
+            if (!code || code === 's') { window.location.href = '/'; return; }
 
             const { data } = await sb.from('short_links').select('*').eq('short_code', code).single();
 
             if (data) {
-                // Tambah klik & lempar ke URL asli
                 await sb.from('short_links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id);
                 window.location.href = data.original_url;
             } else {
-                console.log("Link tidak ditemukan");
                 window.location.href = '/';
             }
         }
