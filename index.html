@@ -5,25 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Aksara Picture | Foto Wisuda & Prewedding Malang Surabaya Kediri</title>
-    <meta name="title" content="Aksara Picture | Foto Wisuda & Prewedding Malang Surabaya Kediri">
-    <meta name="description" content="Jasa foto wisuda, prewedding, dan studio terbaik di Malang, Surabaya, dan Kediri. Hasil estetik, harga mahasiswa, dan pelayanan ramah. Booking sekarang!">
-    <meta name="keywords" content="foto wisuda malang, fotografer wisuda ub, fotografer wisuda um, foto studio malang, prewedding malang, foto wisuda surabaya, foto wisuda kediri, aksara picture">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="Indonesian">
-    <meta name="author" content="Aksara Picture">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aksara-picture-mlg.vercel.app/"> <meta property="og:title" content="Aksara Picture - Capture Your Best Moment">
-    <meta property="og:description" content="Spesialis foto wisuda dan couple session di Jawa Timur. Cek portofolio kami!">
-    <meta property="og:image" content="https://aksara-picture-mlg.vercel.app/iola/iola%20(9).webp"> <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://aksara-picture-mlg.vercel.app">
-    <meta property="twitter:title" content="Aksara Picture Malang">
-    <meta property="twitter:description" content="Jasa dokumentasi wisuda terbaik di Jawa Timur.">
-    <meta property="twitter:image" content="https://aksara-picture-mlg.vercel.app/iola/iola%20(9).webp">
-
-    <link rel="icon" type="image/png" href="assets/img/favicon.png"> <link rel="preload" as="image" href="hz1.webp" media="(min-width: 769px)">
-    <link rel="preload" as="image" href="vz1.webp" media="(max-width: 768px)">
-    
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,34 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-    // Redirect Logic untuk Aksara Shortlink
-    (async function() {
-        const path = window.location.pathname.replace('/', ''); // Ambil slug, misal 'wa'
-        if (!path || path === 'admin' || path === '') return; // Abaikan home & admin
-
-        // Inisialisasi Supabase (Gunakan Key Anon yang sama dengan Admin Panel)
-        const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
-        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // Cari di database
-        const { data, error } = await sb
-        .from('shortlinks')
-        .select('original_url, clicks, id')
-        .eq('slug', path)
-        .single();
-
-        if (data && data.original_url) {
-        // Increment click count (optional, non-blocking)
-        await sb.from('shortlinks').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id);
-        
-        // Lakukan Redirect
-        window.location.href = data.original_url;
-        } 
-        // Jika tidak ditemukan, biarkan halaman loading normal (404 handling)
-    })();
-    </script>
 
     <script type="application/ld+json">
     {
@@ -110,121 +63,117 @@
 <body>
 
     <div id="redirect-overlay" style="display: none;" class="fixed inset-0 z-[99999] bg-[#050505] flex flex-col items-center justify-center">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_#050505_70%)] opacity-80"></div>
-    
-    <div class="relative z-10 flex flex-col items-center animate-fade-in-up">
-        <div class="relative mb-8">
-            <div class="absolute inset-0 bg-studio-gold blur-xl opacity-20 animate-pulse"></div>
-            <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-studio-gold to-[#8f7520] flex items-center justify-center shadow-2xl relative overflow-hidden">
-                <div class="absolute inset-0 bg-white/20 translate-y-full animate-[shimmer_2s_infinite]"></div>
-                <span class="font-serif italic font-bold text-3xl md:text-4xl text-black">A</span>
-            </div>
-        </div>
-
-        <h2 class="font-serif text-2xl md:text-3xl italic text-white mb-2 tracking-wide">Aksara<span class="text-studio-gold">.</span></h2>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_#050505_70%)] opacity-80"></div>
         
-        <div class="flex flex-col items-center gap-3 mt-4">
-            <p id="redirect-status" class="text-[10px] uppercase tracking-[0.3em] text-studio-gold font-bold">Connecting</p>
-            <div class="w-32 h-0.5 bg-white/10 rounded-full overflow-hidden">
-                <div id="redirect-bar" class="w-0 h-full bg-studio-gold transition-all duration-700 ease-out"></div>
+        <div class="relative z-10 flex flex-col items-center animate-fade-in-up">
+            <div class="relative mb-8">
+                <div class="absolute inset-0 bg-studio-gold blur-xl opacity-20 animate-pulse"></div>
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-studio-gold to-[#8f7520] flex items-center justify-center shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-white/20 translate-y-full animate-[shimmer_2s_infinite]"></div>
+                    <span class="font-serif italic font-bold text-3xl md:text-4xl text-black">A</span>
+                </div>
+            </div>
+
+            <h2 class="font-serif text-2xl md:text-3xl italic text-white mb-2 tracking-wide">Aksara<span class="text-studio-gold">.</span></h2>
+            
+            <div class="flex flex-col items-center gap-3 mt-4">
+                <p id="redirect-status" class="text-[10px] uppercase tracking-[0.3em] text-studio-gold font-bold">Connecting</p>
+                <div class="w-32 h-0.5 bg-white/10 rounded-full overflow-hidden">
+                    <div id="redirect-bar" class="w-0 h-full bg-studio-gold transition-all duration-700 ease-out"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    // --- KONFIGURASI ANIMASI & LOGIKA ---
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: { 'studio-gold': '#d4af37', 'studio-black': '#050505' },
-                keyframes: {
-                    shimmer: { '0%': { transform: 'translateY(100%)' }, '100%': { transform: 'translateY(-100%)' } }
+    <script>
+        // --- KONFIGURASI ANIMASI & LOGIKA ---
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 'studio-gold': '#d4af37', 'studio-black': '#050505' },
+                    keyframes: {
+                        shimmer: { '0%': { transform: 'translateY(100%)' }, '100%': { transform: 'translateY(-100%)' } }
+                    }
                 }
             }
-        }
-    };
+        };
 
-    (async function() {
-        // 1. Deteksi Slug
-        const path = window.location.pathname.replace('/', '');
-        // Abaikan root, admin panel, atau file berekstensi (img, css, dll)
-        if (!path || path === 'index.html' || path.includes('.')) return;
+        (async function() {
+            // 1. Deteksi Slug
+            const path = window.location.pathname.replace('/', '');
+            // Abaikan root, admin panel, atau file berekstensi (img, css, dll)
+            if (!path || path === 'index.html' || path.includes('.')) return;
 
-        // 2. Aktifkan Overlay SEGERA (Blocking View)
-        const overlay = document.getElementById('redirect-overlay');
-        const statusText = document.getElementById('redirect-status');
-        const progressBar = document.getElementById('redirect-bar');
-        
-        overlay.style.display = 'flex'; // Show overlay
-        document.body.style.overflow = 'hidden'; // Lock scroll
-        
-        // Animasi Bar Awal (10%)
-        setTimeout(() => progressBar.style.width = '30%', 50);
+            // 2. Aktifkan Overlay SEGERA (Blocking View)
+            const overlay = document.getElementById('redirect-overlay');
+            const statusText = document.getElementById('redirect-status');
+            const progressBar = document.getElementById('redirect-bar');
+            
+            overlay.style.display = 'flex'; // Show overlay
+            document.body.style.overflow = 'hidden'; // Lock scroll
+            
+            // Animasi Bar Awal (10%)
+            setTimeout(() => progressBar.style.width = '30%', 50);
 
-        // 3. Setup Supabase
-        const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
-        
-        try {
-            const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            // 3. Setup Supabase
+            const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
+            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
+            
+            try {
+                const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-            // 4. Query Database
-            statusText.innerText = "Locating Destination...";
-            const { data, error } = await sb
-                .from('shortlinks')
-                .select('original_url, clicks, id')
-                .eq('slug', path)
-                .single();
+                // 4. Query Database
+                statusText.innerText = "Locating Destination...";
+                const { data, error } = await sb
+                    .from('shortlinks')
+                    .select('original_url, clicks, id')
+                    .eq('slug', path)
+                    .single();
 
-            if (data && data.original_url) {
-                // FOUND!
-                statusText.innerText = "Redirecting...";
-                statusText.classList.add('animate-pulse');
-                progressBar.style.width = '100%';
+                if (data && data.original_url) {
+                    // FOUND!
+                    statusText.innerText = "Redirecting...";
+                    statusText.classList.add('animate-pulse');
+                    progressBar.style.width = '100%';
 
-                // Increment click (Fire & Forget - biar cepat)
-                sb.from('shortlinks').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id).then();
+                    // Increment click (Fire & Forget - biar cepat)
+                    sb.from('shortlinks').update({ clicks: (data.clicks || 0) + 1 }).eq('id', data.id).then();
 
-                // Delay sedikit untuk estetika (biar bar penuh terlihat)
-                setTimeout(() => {
-                    window.location.replace(data.original_url);
-                }, 800); 
-
-            } else {
-                // NOT FOUND (404 Handling)
-                statusText.innerText = "Link Not Found";
-                statusText.classList.remove('text-studio-gold');
-                statusText.classList.add('text-red-400');
-                progressBar.style.backgroundColor = '#ef4444';
-                progressBar.style.width = '100%';
-                
-                // Hilangkan overlay setelah 1.5 detik agar user bisa melihat homepage
-                setTimeout(() => {
-                    overlay.style.transition = 'opacity 0.5s';
-                    overlay.style.opacity = '0';
+                    // Delay sedikit untuk estetika (biar bar penuh terlihat)
                     setTimeout(() => {
-                        overlay.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                        // Opsional: Redirect ke 404 page khusus
-                        // window.location.href = '/404.html'; 
-                    }, 500);
-                }, 1500);
-            }
-        } catch (err) {
-            console.error("System Error:", err);
-            overlay.style.display = 'none'; // Fallback jika error script
-            document.body.style.overflow = 'auto';
-        }
-    })();
-</script>
+                        window.location.replace(data.original_url);
+                    }, 800); 
 
+                } else {
+                    // NOT FOUND (404 Handling)
+                    statusText.innerText = "Link Not Found";
+                    statusText.classList.remove('text-studio-gold');
+                    statusText.classList.add('text-red-400');
+                    progressBar.style.backgroundColor = '#ef4444';
+                    progressBar.style.width = '100%';
+                    
+                    // Hilangkan overlay setelah 1.5 detik agar user bisa melihat homepage
+                    setTimeout(() => {
+                        overlay.style.transition = 'opacity 0.5s';
+                        overlay.style.opacity = '0';
+                        setTimeout(() => {
+                            overlay.style.display = 'none';
+                            document.body.style.overflow = 'auto';
+                        }, 500);
+                    }, 1500);
+                }
+            } catch (err) {
+                console.error("System Error:", err);
+                overlay.style.display = 'none'; // Fallback jika error script
+                document.body.style.overflow = 'auto';
+            }
+        })();
+    </script>
 
 
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center bg-studio-black/80 backdrop-blur-sm border-b border-white/5 transition-all duration-300">
         <a href="#" onclick="navigateTo('home')" class="font-serif text-2xl tracking-wide italic z-50 relative">AksaraPicture.</a>
-
+        
         <div class="hidden md:flex gap-10 text-xs tracking-[0.2em] uppercase font-sans text-gray-400">
             <button onclick="navigateTo('home')" class="nav-link hover:text-white transition-all pb-1 active" id="link-home">Home</button>
             <button onclick="navigateTo('portfolio')" class="nav-link hover:text-white transition-all pb-1" id="link-portfolio">Portfolio</button>
