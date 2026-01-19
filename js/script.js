@@ -1,5 +1,3 @@
-
-
 // --- SUPABASE CONFIG ---
 const SUPABASE_URL = 'https://rgeshbeiweqnnkbhgoya.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnZXNoYmVpd2Vxbm5rYmhnb3lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MzcxMTgsImV4cCI6MjA4MzIxMzExOH0.6N7jBP4C0KwHxYA8ymRT1UbN9kTyyQ2O3WV2Umvcdz4';
@@ -27,15 +25,12 @@ async function loadProjects() {
     const gridContainer = document.getElementById('portfolio-grid');
 
     // --- SKELETON LOADING START ---
-    // Daripada teks biasa, kita buat kotak-kotak palsu yang berkedip
     if(gridContainer) {
         let skeletonHTML = '';
-        // Kita buat 6 kotak skeleton (angka genap agar rapi di grid)
         for(let i = 0; i < 6; i++) {
             skeletonHTML += `
             <div class="aspect-[3/4] bg-gray-900 animate-pulse relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 translate-x-[-100%] animate-[shimmer_1.5s_infinite]"></div>
-                
                 <div class="absolute inset-0 flex flex-col items-center justify-center p-4 opacity-50">
                     <div class="w-16 h-2 bg-gray-700 rounded mb-4"></div> <div class="w-32 h-6 bg-gray-700 rounded"></div>      </div>
             </div>`;
@@ -44,42 +39,39 @@ async function loadProjects() {
     }
     // --- SKELETON LOADING END ---
 
-if (!sb || SUPABASE_URL.includes('MASUKAN_URL')) {
-        console.warn("Supabase belum disetting. Portfolio dinamis tidak akan muncul.");
+    if (!sb) {
+        console.warn("Supabase client belum siap.");
         return;
     }
 
     try {
-        // 1. Ambil data Projects
-        // PENTING: Di sini kita mengurutkan berdasarkan 'sort_order' (posisi drag & drop)
+        // 1. Ambil data Projects (Urutkan berdasarkan sort_order)
         const { data: projData, error: projError } = await sb
             .from('projects')
             .select('*')
-            .order('sort_order', { ascending: true }); // <--- INI KUNCINYA
+            .order('sort_order', { ascending: true });
 
         if (projError) throw projError;
 
         // 2. Ambil data Images
         const { data: imgData, error: imgError } = await sb
             .from('project_images')
-            .select('*');
+            .select('*')
+            .order('sort_order', { ascending: true }); // Pastikan gambar juga urut
 
         if (imgError) throw imgError;
 
-        // 3. Mapping Data
+        // 3. Mapping Data untuk Modal
         if (projData) {
-            // Bersihkan data lama jika perlu (tergantung logika aplikasi Anda)
-            // projectsData = {}; 
-
             projData.forEach(proj => {
                 const relatedImages = imgData
                     .filter(img => img.project_id === proj.id)
                     .map(img => ({
                         src: img.image_url,
-                        aspect: img.aspect_ratio
+                        aspect: img.aspect_ratio // Menyimpan nilai rasio (misal: 1.5 atau 0.66)
                     }));
 
-                // Simpan ke variable global projectsData (sesuai kode asli Anda)
+                // Simpan ke variable global projectsData
                 projectsData[proj.slug] = {
                     title: proj.title,
                     category: proj.category,
@@ -87,8 +79,7 @@ if (!sb || SUPABASE_URL.includes('MASUKAN_URL')) {
                 };
             });
             
-            // 4. Render Grid
-            // Karena projData sudah urut dari langkah no 1, maka renderPortfolioGrid juga akan urut
+            // 4. Render Grid Utama
             renderPortfolioGrid(projData, imgData);
         }
 
@@ -97,27 +88,31 @@ if (!sb || SUPABASE_URL.includes('MASUKAN_URL')) {
         if(gridContainer) gridContainer.innerHTML = '<div class="col-span-full text-center text-red-500">Gagal memuat data.</div>';
     }
 }
-// --- OPTIMIZED RENDER FUNCTION (FIXED: Auto Show Items) ---
+
+// --- OPTIMIZED RENDER FUNCTION (DENGAN LOGIC ASPECT RATIO) ---
 function renderPortfolioGrid(projList, imgList) {
     const gridContainer = document.getElementById('portfolio-grid');
     if (!gridContainer) return;
     
-    // Performance: Gunakan Buffer String
     let cardsHtml = ''; 
 
-    projList.forEach((proj, index) => {
+    projList.forEach((proj) => {
+        // Cari gambar pertama sebagai thumbnail
         const thumb = imgList.find(img => img.project_id === proj.id);
         const thumbUrl = thumb ? thumb.image_url : 'placeholder.jpg'; 
 
-        // SEO: Dynamic Alt Text
+        // --- LOGIC BARU: PENENTUAN ASPECT RATIO ---
+        // Jika aspect_ratio > 1 berarti Landscape (4/3)
+        // Jika aspect_ratio < 1 berarti Portrait (3/4)
+        // Default ke portrait jika data null
+        const isLandscape = thumb && thumb.aspect_ratio > 1;
+        const aspectClass = isLandscape ? 'aspect-[4/3]' : 'aspect-[3/4]';
+        // ------------------------------------------
+
         const altText = `${proj.title} - Foto ${proj.category} Malang by Aksara Picture`;
 
-        // HAPUS style "animation: fadeIn" manual.
-        // Kita serahkan urusan animasi sepenuhnya ke GSAP di bawah.
-        // Set default opacity 0 agar transisi filter terlihat mulus.
-        
         cardsHtml += `
-            <div class="portfolio-item group cursor-pointer relative bg-gray-800 aspect-[3/4] overflow-hidden opacity-0 scale-95 hidden" 
+            <div class="portfolio-item group cursor-pointer relative bg-gray-800 ${aspectClass} overflow-hidden opacity-0 scale-95 hidden" 
                  data-category="${proj.category.toLowerCase()}"
                  data-slug="${proj.slug}" 
                  onclick="openProject(this.dataset.slug)">
@@ -143,14 +138,10 @@ function renderPortfolioGrid(projList, imgList) {
     // 1. Masukkan HTML ke DOM
     gridContainer.innerHTML = cardsHtml;
     
-    // 2. [SOLUSI UTAMA] Paksa jalankan filter 'all' secara otomatis!
-    // Ini akan memicu GSAP untuk mengubah opacity 0 -> 1
-    // Kita beri sedikit delay (setTimeout 50ms) agar DOM benar-benar siap
+    // 2. Refresh Filter otomatis agar item muncul
     setTimeout(() => {
-        // Cek tombol mana yang sedang aktif (misal user refresh saat filter wedding aktif)
         const activeBtn = document.querySelector('.filter-btn.active');
         const currentCategory = activeBtn ? activeBtn.textContent.toLowerCase() : 'all';
-        
         filterSelection(currentCategory);
     }, 100);
 
@@ -158,7 +149,7 @@ function renderPortfolioGrid(projList, imgList) {
     if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 }
 
-// Function Open Project (FIXED)
+// Function Open Project (DENGAN LOGIC ASPECT RATIO DETAIL)
 function openProject(projectSlug) {
     // Reset animasi lama
     const modal = document.getElementById('project-modal');
@@ -182,9 +173,14 @@ function openProject(projectSlug) {
 
     project.images.forEach(img => {
         const div = document.createElement('div');
-        div.className = `w-full ${img.aspect} bg-gray-800 overflow-hidden relative`;
-        // SEO: Alt text detail
-        div.innerHTML = `<img src="${img.src}" alt="${project.title} detail - Aksara Picture" class="w-full h-full object-cover" loading="lazy" decoding="async">`;
+        
+        // --- LOGIC BARU: ASPECT RATIO UNTUK DETAIL ---
+        const isLandscape = img.aspect > 1;
+        const aspectClass = isLandscape ? 'aspect-[4/3]' : 'aspect-[3/4]';
+        // ---------------------------------------------
+
+        div.className = `w-full ${aspectClass} bg-gray-800 overflow-hidden relative`;
+        div.innerHTML = `<img src="${img.src}" alt="${project.title} detail" class="w-full h-full object-cover" loading="lazy" decoding="async">`;
         fragment.appendChild(div);
     });
 
@@ -244,16 +240,13 @@ function navigateTo(pageId) {
             onComplete: () => {
                 currentSection.classList.remove('active');
                 if(targetSection) {
-                    
                     // FIX: Reset Scroll Instan via Lenis
                     if (lenis) {
                         lenis.scrollTo(0, { immediate: true });
                     } else {
                         window.scrollTo(0,0);
                     }
-
                     targetSection.classList.add('active');
-                    
                     gsap.fromTo(targetSection, 
                         { opacity: 0, y: 30 },
                         { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", delay: 0.1 }
@@ -316,22 +309,20 @@ function toggleMobileMenu() {
     }
 }
 
-// 4. Terms Modal (Updated Fix Scroll)
+// 4. Terms Modal
 function toggleTerms() {
     const modal = document.getElementById('terms-modal');
     
     if (modal.classList.contains('hidden')) {
-        // Saat Buka Modal
         modal.classList.remove('hidden');
-        if(lenis) lenis.stop(); // STOP scroll halaman belakang
+        if(lenis) lenis.stop();
         
         gsap.fromTo(modal.children[1], 
             { scale: 0.95, opacity: 0 }, 
             { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }
         );
     } else {
-        // Saat Tutup Modal
-        if(lenis) lenis.start(); // JALANKAN lagi scroll halaman belakang
+        if(lenis) lenis.start();
         
         gsap.to(modal.children[1], { 
             scale: 0.95, 
@@ -372,11 +363,10 @@ function startHeroSlideshow() {
 // --- INITIALIZATION ---
 window.addEventListener('load', () => {
 
-
     // --- LENIS SETUP ---
     if (typeof Lenis !== 'undefined') {
         lenis = new Lenis({
-            duration: 1.2, // Balance antara smooth & responsive
+            duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
             direction: 'vertical', 
@@ -389,7 +379,6 @@ window.addEventListener('load', () => {
         });
 
         gsap.ticker.lagSmoothing(0);
-        
         console.log("Lenis Active");
     } else {
         console.warn("Lenis library not loaded");
