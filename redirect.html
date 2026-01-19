@@ -9,40 +9,66 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { 'studio-gold': '#d4af37', 'studio-black': '#050505' },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Merriweather', 'serif'], // Fallback serif yang elegan
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: { 
+                        'studio-gold': '#d4af37', 
+                        'charcoal': '#1a1a1a',
+                        'soft-gray': '#f9fafb'
+                    },
                     keyframes: {
-                        shimmer: { '0%': { transform: 'translateY(100%)' }, '100%': { transform: 'translateY(-100%)' } },
                         fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
                     },
                     animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards'
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards' // Lebih smooth
                     }
                 }
             }
         };
     </script>
     <style>
-        body { background-color: #050505; color: white; overflow: hidden; }
+        /* Import font Google untuk estetika maksimal jika koneksi memungkinkan */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&display=swap');
+        
+        body { 
+            background-color: #ffffff; 
+            color: #1a1a1a; 
+            overflow: hidden; 
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 <body>
 
-    <div id="redirect-overlay" class="fixed inset-0 z-50 bg-[#050505] flex flex-col items-center justify-center">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#1a1a1a_0%,_#050505_70%)] opacity-80"></div>
+    <div id="redirect-overlay" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center">
+        
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#f3f4f6_0%,_#ffffff_60%)]"></div>
         
         <div class="relative z-10 flex flex-col items-center animate-fade-in-up">
-            <div class="relative mb-8">
-                <div class="absolute inset-0 bg-studio-gold blur-xl opacity-20 animate-pulse"></div>
+            
+            <div class="relative mb-6">
+                <div class="absolute inset-0 bg-studio-gold blur-2xl opacity-10"></div>
             </div>
 
-            <h2 class="font-serif text-2xl md:text-3xl italic text-white mb-2 tracking-wide">Aksara<span class="text-studio-gold">Picture.</span></h2>
+            <h2 class="font-serif text-3xl md:text-4xl italic text-charcoal mb-2 tracking-wide font-medium">
+                Aksara<span class="text-studio-gold">Picture.</span>
+            </h2>
             
-            <div class="flex flex-col items-center gap-3 mt-4">
-                <p id="redirect-status" class="text-[10px] uppercase tracking-[0.3em] text-studio-gold font-bold">Connecting</p>
-                <div class="w-32 h-0.5 bg-white/10 rounded-full overflow-hidden">
-                    <div id="redirect-bar" class="w-0 h-full bg-studio-gold transition-all duration-700 ease-out"></div>
+            <div class="flex flex-col items-center gap-4 mt-6">
+                <p id="redirect-status" class="text-[10px] uppercase tracking-[0.25em] text-gray-400 font-semibold transition-colors duration-300">
+                    Connecting
+                </p>
+
+                <div class="w-32 h-1 bg-gray-100 rounded-full overflow-hidden">
+                    <div id="redirect-bar" class="w-0 h-full bg-studio-gold shadow-[0_0_10px_rgba(212,175,55,0.4)] transition-all duration-700 ease-out"></div>
                 </div>
             </div>
+        </div>
+        
+        <div class="absolute bottom-8 text-[10px] text-gray-300 tracking-widest uppercase animate-fade-in-up" style="animation-delay: 0.2s;">
+            Secure Redirect
         </div>
     </div>
 
@@ -64,7 +90,7 @@
 
             try {
                 // 3. Query Database
-                statusText.innerText = "Locating Destination...";
+                statusText.innerText = "Locating...";
                 const { data, error } = await sb
                     .from('shortlinks')
                     .select('original_url, clicks, id')
@@ -74,6 +100,9 @@
                 if (data && data.original_url) {
                     // FOUND!
                     statusText.innerText = "Redirecting...";
+                    statusText.classList.remove('text-gray-400'); // Hapus warna default
+                    statusText.classList.add('text-studio-gold'); // Ubah jadi emas saat sukses
+                    
                     progressBar.style.width = '100%';
                     
                     // Increment click
@@ -83,14 +112,15 @@
                         window.location.replace(data.original_url);
                     }, 800); 
                 } else {
-                    // NOT FOUND -> Lempar ke Homepage (index.html)
+                    // NOT FOUND
                     statusText.innerText = "Link Not Found";
-                    statusText.style.color = '#ef4444'; // Merah
+                    statusText.style.color = '#ef4444'; // Merah Elegan
                     progressBar.style.backgroundColor = '#ef4444';
+                    progressBar.style.boxShadow = 'none';
                     progressBar.style.width = '100%';
                     
                     setTimeout(() => {
-                        window.location.replace('/'); // Kembali ke index.html
+                        window.location.replace('/'); 
                     }, 1500);
                 }
             } catch (err) {
