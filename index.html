@@ -2,6 +2,13 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self'; 
+                  script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com; 
+                  style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; 
+                  font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; 
+                  img-src 'self' data: https:; 
+                  connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aksara Picture | Foto Wisuda & Prewedding Malang Surabaya Kediri</title>
     <meta name="title" content="Aksara Picture | Foto Wisuda & Prewedding Malang Surabaya Kediri">
@@ -22,22 +29,23 @@
     <meta property="twitter:description" content="Jasa dokumentasi wisuda terbaik di Jawa Timur.">
     <meta property="twitter:image" content="https://aksarapicture.web.id/iola/iola%20(9).webp">
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
-    <link rel="preload" as="image" href="hz1.webp" media="(min-width: 769px)">
-    <link rel="preload" as="image" href="vz1.webp" media="(max-width: 768px)">
+    <link rel="preload" as="image" href="assets/img/hz1.webp" media="(min-width: 769px)">
+    <link rel="preload" as="image" href="assets/img/vz1.webp" media="(max-width: 768px)">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "PhotographyBusiness",
         "name": "Aksara Picture",
-        "image": "https://aksarapicture.web.id/hz1.webp",
+        "image": "https://aksarapicture.web.id/assets/img/hz1.webp",
         "@id": "https://aksarapicture.web.id",
         "url": "https://aksarapicture.web.id",
         "telephone": "+62881026774401",
@@ -74,9 +82,9 @@
         <button onclick="navigateTo('services')" class="nav-link hover:text-white transition-all pb-1" id="link-services">Services</button>
         <button onclick="navigateTo('contact')" class="nav-link hover:text-white transition-all pb-1" id="link-contact">Contact</button>
       </div>
-      <button onclick="toggleMobileMenu()" class="md:hidden text-white text-xl z-50 relative w-8 h-8 flex items-center justify-center">
-        <i class="fa-solid fa-bars-staggered transition-transform duration-300" id="mobile-menu-icon"></i>
-      </button>
+        <button aria-label="Buka Menu Utama" onclick="toggleMobileMenu()" class="md:hidden text-white text-xl z-50 relative w-8 h-8 flex items-center justify-center">
+          <i class="fa-solid fa-bars-staggered transition-transform duration-300" id="mobile-menu-icon"></i>
+        </button>
     </nav>
     <div id="mobile-menu" class="fixed inset-0 bg-studio-black z-40 flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300">
       <button onclick="navigateTo('home'); toggleMobileMenu()" class="text-3xl font-serif italic hover:text-studio-gold transition-colors">Home</button>
@@ -90,20 +98,23 @@
           <div class="absolute inset-0 z-0 bg-black">
             <div id="hero-slideshow">
               <picture class="hero-slide active">
-                <source media="(max-width: 768px)" srcset="vz1.webp">
-                <img src="hz1.webp" alt="Aksara Picture Graduation Showcase 1">
+                <source media="(max-width: 768px)" srcset="assets/img/vz1.webp">
+                <img src="assets/img/hz1.webp" alt="Aksara Picture Graduation Showcase 1" fetchpriority="high" width="1920" height="1080">
               </picture>
+
               <picture class="hero-slide">
-                <source media="(max-width: 768px)" srcset="vz2.webp">
-                <img src="hz2.webp" alt="Aksara Picture Graduation Showcase 2">
+                <source media="(max-width: 768px)" srcset="assets/img/vz2.webp">
+                <img src="assets/img/hz2.webp" alt="Aksara Picture Graduation Showcase 2" loading="lazy">
               </picture>
+
               <picture class="hero-slide">
-                <source media="(max-width: 768px)" srcset="2.webp">
-                <img src="6.webp" alt="Aksara Picture Cinematic Shot">
+                <source media="(max-width: 768px)" srcset="assets/img/2.webp">
+                <img src="assets/img/6.webp" alt="Aksara Picture Cinematic Shot" loading="lazy" width="1080" height="1920">
               </picture>
+
               <picture class="hero-slide">
-                <source media="(max-width: 768px)" srcset="vz3.webp">
-                <img src="hz3.webp" alt="Aksara Picture Portrait Showcase">
+                <source media="(max-width: 768px)" srcset="assets/img/vz3.webp">
+                <img src="assets/img/hz3.webp" alt="Aksara Picture Portrait Showcase" loading="lazy">
               </picture>
             </div>
             <div class="absolute inset-0 bg-black/30 z-10"></div>
@@ -120,7 +131,7 @@
           <div class="relative py-24 px-6 md:px-12 border-b border-white/5 overflow-hidden">
             <div class="absolute inset-0 z-0">
               <div class="absolute inset-0 bg-studio-black/70 z-10"></div>
-              <img src="5.webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Background Texture" loading="lazy">
+              <img src="assets/img/14.webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Background Texture" loading="lazy">
             </div>
             <div class="relative z-10 max-w-6xl mx-auto">
               <div class="flex flex-col md:flex-row justify-between items-end mb-12">
@@ -133,14 +144,14 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="group cursor-pointer" onclick="navigateTo('portfolio')">
                   <div class="overflow-hidden aspect-[4/3] mb-4 border border-white/20 shadow-xl">
-                    <img src="iola/iola (5).webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" alt="Iola Graduation Moment">
+                    <img src="assets/img/iola (5).webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" alt="Iola Graduation Moment">
                   </div>
                   <h3 class="font-serif text-xl italic text-gray-200 group-hover:text-white transition-colors drop-shadow-md">Iola's Grads</h3>
                   <p class="text-xs text-gray-400 uppercase tracking-widest mt-1 font-medium">Family Session</p>
                 </div>
                 <div class="group cursor-pointer" onclick="navigateTo('portfolio')">
                   <div class="overflow-hidden aspect-[4/3] mb-4 border border-white/20 shadow-xl">
-                    <img src="Diva/diva (15).webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" alt="Diva Graduation Moment">
+                    <img src="assets/img/diva (15).webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" alt="Diva Graduation Moment">
                   </div>
                   <h3 class="font-serif text-xl italic text-gray-200 group-hover:text-white transition-colors drop-shadow-md">Diva's Grads</h3>
                   <p class="text-xs text-gray-400 uppercase tracking-widest mt-1 font-medium">Self Session</p>
@@ -151,14 +162,14 @@
           <div class="relative py-24 px-6 md:px-12 border-b border-white/5 overflow-hidden">
             <div class="absolute inset-0 z-0">
               <div class="absolute inset-0 bg-studio-black/70 z-10"></div>
-              <img src="iola/iola (6).webp" class="w-full h-full object-cover opacity-50 grayscale" alt="Pricing Background" loading="lazy">
+              <img src="assets/img/6.webp" class="w-full h-full object-cover opacity-50 grayscale" alt="Pricing Background" loading="lazy">
             </div>
             <div class="relative z-10 max-w-4xl mx-auto text-center">
               <span class="text-xs text-studio-gold tracking-widest uppercase mb-4 block font-bold drop-shadow-md">Best Value</span>
               <h2 class="font-serif text-3xl md:text-4xl italic mb-12 drop-shadow-md">Popular Packages</h2>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left">
                 <div class="bg-black/60 backdrop-blur-md p-6 border border-white/10 hover:border-studio-gold transition-colors duration-300 group shadow-lg">
-                  <h4 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Self Session</h4>
+                  <h3 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Self Session</h3>
                   <p class="text-xs text-gray-400 mb-4 h-8">Perfect for personal graduation portraits.</p>
                   <div class="border-t border-white/10 pt-4 mt-auto">
                     <span class="text-xs text-gray-400 uppercase">Starts from</span>
@@ -167,7 +178,7 @@
                 </div>
                 <div class="bg-black/60 backdrop-blur-md p-6 border border-white/10 hover:border-studio-gold transition-colors duration-300 group relative overflow-hidden shadow-lg">
                   <div class="absolute top-0 right-0 bg-studio-gold text-black text-[10px] px-2 py-1 font-bold uppercase">Best Seller</div>
-                  <h4 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Group Session</h4>
+                  <h3 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Group Session</h3>
                   <p class="text-xs text-gray-400 mb-4 h-8">Fun session with your best friends.</p>
                   <div class="border-t border-white/10 pt-4 mt-auto">
                     <span class="text-xs text-gray-400 uppercase">Starts from</span>
@@ -175,7 +186,7 @@
                   </div>
                 </div>
                 <div class="bg-black/60 backdrop-blur-md p-6 border border-white/10 hover:border-studio-gold transition-colors duration-300 group shadow-lg">
-                  <h4 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Prewedding</h4>
+                  <h3 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Prewedding</h3>
                   <p class="text-xs text-gray-400 mb-4 h-8">Timeless memories for your journey.</p>
                   <div class="border-t border-white/10 pt-4 mt-auto">
                     <span class="text-xs text-gray-400 uppercase">Starts from</span>
@@ -189,7 +200,7 @@
           <div class="relative py-32 px-6 md:px-12 overflow-hidden">
             <div class="absolute inset-0 z-0">
               <div class="absolute inset-0 bg-studio-black/60 z-10"></div>
-              <img src="fadel/fadel (16).webp" class="w-full h-full object-cover grayscale opacity-60" loading="lazy" alt="Graduation Celebration">
+              <img src="assets/img/fadel (16).webp" class="w-full h-full object-cover grayscale opacity-60" loading="lazy" alt="Graduation Celebration">
             </div>
             <div class="relative z-10 max-w-4xl mx-auto text-center">
               <h2 class="font-serif text-4xl md:text-6xl italic mb-6 drop-shadow-lg">Ready to make memories?</h2>
@@ -206,7 +217,7 @@
       <section id="portfolio" class="page-section">
         <div class="fixed inset-0 z-0">
           <div class="absolute inset-0 bg-studio-black/70 z-10"></div>
-          <img src="5.webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Portfolio Background" loading="lazy">
+          <img src="assets/img/5.webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Portfolio Background" loading="lazy">
         </div>
         <div class="relative z-10 px-6 md:px-12 pb-24 pt-10">
           <div class="max-w-7xl mx-auto">
@@ -235,7 +246,7 @@
       <section id="services" class="page-section">
         <div class="fixed inset-0 z-0">
           <div class="absolute inset-0 bg-studio-black/70 z-10"></div>
-          <img src="hilman/hilman (8).webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Services Background" loading="lazy">
+          <img src="assets/img/vz2.webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Services Background" loading="lazy">
         </div>
         <div class="relative z-10 px-6 md:px-12 pb-24 pt-10">
           <div class="max-w-4xl mx-auto mt-10">
@@ -380,7 +391,7 @@
       <section id="contact" class="page-section">
         <div class="fixed inset-0 z-0">
           <div class="absolute inset-0 bg-studio-black/70 z-10"></div>
-          <img src="1.webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Contact Background" loading="lazy">
+          <img src="assets/img/1.webp" class="w-full h-full object-cover opacity-60 grayscale" alt="Contact Background" loading="lazy">
         </div>
         <div class="relative z-10 px-6 md:px-12 pb-24 pt-10">
           <div class="max-w-4xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-16">
