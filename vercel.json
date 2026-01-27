@@ -1,55 +1,26 @@
 {
-  "hosting": {
-    "public": "out", 
-    "cleanUrls": true,
-    "trailingSlash": false,
-    
-
-    "redirects": [
-      {
-        "source": "/old-page",
-        "destination": "/new-page",
-        "type": 301
-      }
-    ],
-
-
-    "rewrites": [
-      {
-        "source": "/",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/article/:slug",
-        "destination": "/article.html?slug=:slug"
-      },
-      {
-        "source": "/admin",
-        "destination": "/admin.html"
-      },
-      {
-        "source": "/blog",
-        "destination": "/blog.html"
-      },
-      {
-        "source": "/portfolio",
-        "destination": "/portfolio.html"
-      },
-      {
-        "source": "/services",
-        "destination": "/services.html"
-      },
-      {
-        "source": "/contact",
-        "destination": "/contact.html"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html" 
-      }
-    ],
-    
-    "headers": [
-    ]
-  }
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/halaman-lama",
+      "destination": "/halaman-baru",
+      "permanent": true
+    }
+  ]
 }
