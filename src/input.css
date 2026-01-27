@@ -15,12 +15,17 @@ body {
 
 /* --- Page Transition Styles --- */
 .page-section {
-    display: none; /* Default hidden */
+display: block !important; /* Memaksa section selalu tampil */
     min-height: 100vh;
     padding-top: 100px; /* Space for fixed header */
-    opacity: 0;
+    opacity: 1 !important;     /* Memastikan tidak transparan */
     animation: none;
     position: relative;
+}
+
+/* Khusus halaman Home, padding-top 0 agar full screen */
+#home.page-section {
+  padding-top: 0 !important;
 }
 
 .page-section.active {

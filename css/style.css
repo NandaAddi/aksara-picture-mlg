@@ -1620,10 +1620,8 @@ body {
 
 .page-section {
   display: none;
-  /* Default hidden */
   min-height: 100vh;
   padding-top: 100px;
-  /* Space for fixed header */
   opacity: 0;
   animation: none;
   position: relative;
