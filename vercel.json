@@ -1,15 +1,33 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/",
       "destination": "/index.html"
     },
+    
+    // 1. FITUR KHUSUS (Prioritas Tertinggi)
     {
-      "source": "/(.*\\..*)",
-      "destination": "/$1"
+      "source": "/article/:slug",
+      "destination": "/article.html?slug=:slug"
     },
     {
-      "source": "/(.*)",
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
+
+    // 2. HALAMAN WEBSITE (Didaftarkan manual agar tidak dianggap shortlink)
+    { "source": "/blog", "destination": "/blog.html" },
+    { "source": "/portfolio", "destination": "/portfolio.html" },
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+
+    // 3. SHORTLINK HANDLER (Catch-All Terakhir)
+    // Regex ini artinya: "Tangkap semua URL, KECUALI yang berawalan assets, css, js, atau favicon"
+    // URL yang lolos dari filter di atas akan masuk ke sini (redirect.html)
+    {
+      "source": "/:path((?!assets|css|js|favicon.ico|sw.js).*)",
       "destination": "/redirect.html"
     }
   ],
