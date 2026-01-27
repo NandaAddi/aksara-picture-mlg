@@ -1,19 +1,14 @@
 {
   "name": "aksara-portfolio",
   "version": "1.0.0",
-  "description": "Website Portfolio Aksara Picture dengan Admin Panel dan Blog",
+  "description": "",
   "main": "index.js",
-  "private": true,
   "scripts": {
-    "dev": "tailwindcss -i ./src/input.css -o ./css/style.css --watch",
-    "build": "tailwindcss -i ./src/input.css -o ./css/style.css --minify"
+    "dev": "tailwindcss -i ./src/input.css -o ./css/style.css --watch"
   },
   "keywords": [],
-  "author": "Aksara Picture",
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.39.3"
-  },
   "devDependencies": {
     "tailwindcss": "^3.4.1"
   }
