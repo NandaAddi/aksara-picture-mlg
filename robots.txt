@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+
+# DILARANG MENGAKSES SYSTEM FILES
+Disallow: /api/
+Disallow: /redirect.html
+
+# LOKASI SITEMAP
+Sitemap: https://aksarapicture.web.id/sitemap.xml
