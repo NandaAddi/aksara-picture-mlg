@@ -1,15 +1,9 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/(.*\\..*)",
-      "destination": "/$1"
-    },
-    {
-      "source": "/(.*)",
+      "source": "/:path((?!index|article|admin|blog|portfolio|services|contact|assets|.*\\..*).*)",
       "destination": "/redirect.html"
     }
   ],
