@@ -286,4 +286,7 @@ window.addEventListener('load', () => {
         const formContainer = document.querySelector('form');
         if(formContainer) gsap.from(formContainer.parentElement, { x: 50, opacity: 0, duration: 0.8, ease: "power2.out", delay: 0.3 });
     }
+
+    
+    
 });

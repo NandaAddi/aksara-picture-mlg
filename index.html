@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aksara Picture | Foto Wisuda Malang Surabaya</title>
+    <title>Aksara Picture | Jasa Foto Wisuda Malang & Surabaya Terbaik</title>
     <meta name="title" content="Aksara Picture | Foto Wisuda Malang Surabaya">
     <meta name="description" content="Jasa foto wisuda, prewedding, dan studio terbaik di Malang, Surabaya, dan Kediri. Hasil estetik, harga mahasiswa, dan pelayanan ramah. Booking sekarang!">
     <meta name="keywords" content="foto wisuda malang, fotografer wisuda ub, fotografer wisuda um, foto studio malang, prewedding malang, foto wisuda surabaya, foto wisuda kediri, aksara picture">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://aksarapicture.web.id/">
+    <link rel="canonical" href="https://aksarapicture.web.id/index.html">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon.png">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    
     <meta name="language" content="Id">
     <meta name="author" content="Nanda Addi Wijaya">
     <meta property="og:type" content="website">
@@ -21,15 +25,18 @@
     <meta property="twitter:title" content="Aksara Picture Malang">
     <meta property="twitter:description" content="Jasa dokumentasi wisuda terbaik di Jawa Timur.">
     <meta property="twitter:image" content="https://aksarapicture.web.id/iola/iola%20(9).webp">
-    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    
     <link rel="preload" as="image" href="assets/img/hz1.webp" media="(min-width: 769px)">
     <link rel="preload" as="image" href="assets/img/vz1.webp" media="(max-width: 768px)">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <noscript>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
@@ -68,28 +75,30 @@
   </head>
   <body>
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center bg-studio-black/80 backdrop-blur-sm border-b border-white/5 transition-all duration-300">
-      <a href="index.html" class="font-serif text-2xl tracking-wide italic z-50 relative">AksaraPicture.</a>
+      <a href="index.html" class="font-serif text-2xl tracking-wide italic z-50 relative" aria-label="Aksara Picture Homepage" title="Kembali ke Beranda">AksaraPicture.</a>
       <div class="hidden md:flex gap-10 text-xs tracking-[0.2em] uppercase font-sans text-gray-400">
-        <a href="index.html" class="nav-link text-white transition-all pb-1 active" id="link-home">Home</a>
-        <a href="portfolio.html" class="nav-link hover:text-white transition-all pb-1" id="link-portfolio">Portfolio</a>
-        <a href="services.html" class="nav-link hover:text-white transition-all pb-1" id="link-services">Services</a>
-        <a href="blog.html" class="nav-link hover:text-white transition-all pb-1" id="link-blog">Blog</a>
-        <a href="contact.html" class="nav-link hover:text-white transition-all pb-1" id="link-contact">Contact</a>
+        <a href="index.html" class="nav-link text-white transition-all pb-1 active" id="link-home" title="Halaman Utama">Home</a>
+        <a href="portfolio.html" class="nav-link hover:text-white transition-all pb-1" id="link-portfolio" title="Lihat Portofolio Kami">Portfolio</a>
+        <a href="services.html" class="nav-link hover:text-white transition-all pb-1" id="link-services" title="Daftar Harga & Layanan">Services</a>
+        <a href="blog.html" class="nav-link hover:text-white transition-all pb-1" id="link-blog" title="Baca Tips & Artikel">Blog</a>
+        <a href="contact.html" class="nav-link hover:text-white transition-all pb-1" id="link-contact" title="Hubungi Kami">Contact</a>
       </div>
-        <button aria-label="Buka Menu Utama" onclick="toggleMobileMenu()" class="md:hidden text-white text-xl z-50 relative w-8 h-8 flex items-center justify-center">
-          <i class="fa-solid fa-bars-staggered transition-transform duration-300" id="mobile-menu-icon"></i>
-        </button>
+      <button aria-label="Buka Menu Utama" onclick="toggleMobileMenu()" class="md:hidden text-white text-xl z-50 relative w-8 h-8 flex items-center justify-center">
+        <i class="fa-solid fa-bars-staggered transition-transform duration-300" id="mobile-menu-icon"></i>
+      </button>
     </nav>
+
     <div id="mobile-menu" class="fixed inset-0 bg-studio-black z-40 flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300">
-      <a href="index.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors text-white">Home</a>
-      <a href="portfolio.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors">Portfolio</a>
-      <a href="services.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors">Services</a>
-      <a href="blog.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors">Blog</a>
-      <a href="contact.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors">Contact</a>
+      <a href="index.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors text-white" title="Menu Mobile Home">Home</a>
+      <a href="portfolio.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors" title="Menu Mobile Portfolio">Portfolio</a>
+      <a href="services.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors" title="Menu Mobile Services">Services</a>
+      <a href="blog.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors" title="Menu Mobile Blog">Blog</a>
+      <a href="contact.html" class="text-3xl font-serif italic hover:text-studio-gold transition-colors" title="Menu Mobile Contact">Contact</a>
     </div>
-    
+
     <main id="app-content" class="relative z-10">
       <section id="home" class="page-section active" style="padding-top: 0;">
+        
         <div class="h-screen relative flex items-center justify-center overflow-hidden">
           <div class="absolute inset-0 z-0 bg-black">
             <div id="hero-slideshow">
@@ -97,17 +106,14 @@
                 <source media="(max-width: 768px)" srcset="assets/img/vz1.webp">
                 <img src="assets/img/hz1.webp" alt="Aksara Picture Graduation Showcase 1" fetchpriority="high" width="1920" height="1080">
               </picture>
-
               <picture class="hero-slide">
                 <source media="(max-width: 768px)" srcset="assets/img/vz2.webp">
                 <img src="assets/img/hz2.webp" alt="Aksara Picture Graduation Showcase 2" loading="lazy">
               </picture>
-
               <picture class="hero-slide">
                 <source media="(max-width: 768px)" srcset="assets/img/2.webp">
                 <img src="assets/img/6.webp" alt="Aksara Picture Cinematic Shot" loading="lazy" width="1080" height="1920">
               </picture>
-
               <picture class="hero-slide">
                 <source media="(max-width: 768px)" srcset="assets/img/vz3.webp">
                 <img src="assets/img/hz3.webp" alt="Aksara Picture Portrait Showcase" loading="lazy">
@@ -116,14 +122,17 @@
             <div class="absolute inset-0 bg-black/30 z-10"></div>
           </div>
           <div class="relative z-10 text-center px-4 mt-20">
+            <h1 class="sr-only">Aksara Picture | Jasa Foto Wisuda Malang Surabaya Terbaik</h1>
             <p class="text-xs tracking-[0.3em] uppercase mb-6 text-gray-200 animate-fade-in-up font-medium drop-shadow-md">#rollingwithaksara</p>
-            <h1 class="font-serif text-6xl md:text-8xl italic leading-tight mb-8 drop-shadow-lg"> Aksara <br>
+            <div class="font-serif text-6xl md:text-8xl italic leading-tight mb-8 drop-shadow-lg text-white"> Aksara <br>
               <span class="not-italic">Picture</span>
-            </h1>
+            </div>
             <button onclick="document.getElementById('home-content').scrollIntoView({behavior: 'smooth'})" class="animate-bounce border border-white/50 px-8 py-3 text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm shadow-lg"> Our Portfolio </button>
           </div>
         </div>
+
         <div id="home-content" class="relative z-20 bg-studio-black">
+            
           <div class="relative py-24 px-6 md:px-12 border-b border-white/5 overflow-hidden">
             <div class="absolute inset-0 z-0">
               <div class="absolute inset-0 bg-studio-black/70 z-10"></div>
@@ -135,26 +144,28 @@
                   <span class="text-xs text-studio-gold tracking-widest uppercase mb-2 block font-bold drop-shadow-md">Latest Stories</span>
                   <h2 class="font-serif text-3xl md:text-4xl italic drop-shadow-md">Captured Moments</h2>
                 </div>
-                <button onclick="window.location.href='portfolio.html'" class="text-xs text-gray-300 hover:text-white border-b border-transparent hover:border-white pb-1 transition-all mt-4 md:mt-0 font-medium">View All Portfolio →</button>
+                <a href="portfolio.html" class="text-xs text-gray-300 hover:text-white border-b border-transparent hover:border-white pb-1 transition-all mt-4 md:mt-0 font-medium" title="Lihat Semua Portfolio">View All Portfolio →</a>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="group cursor-pointer" onclick="window.location.href='portfolio.html'">
+                <a href="portfolio.html" class="group cursor-pointer block" title="Lihat Detail Portfolio">
                   <div class="overflow-hidden aspect-[4/3] mb-4 border border-white/20 shadow-xl">
                     <img src="assets/img/iola (5).webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" alt="Iola Graduation Moment">
                   </div>
-                  <h3 class="font-serif text-xl italic text-gray-200 group-hover:text-white transition-colors drop-shadow-md">Iola's Grads</h3>
+                  <div class="font-serif text-xl italic text-gray-200 group-hover:text-white transition-colors drop-shadow-md">Iola's Grads</div>
                   <p class="text-xs text-gray-400 uppercase tracking-widest mt-1 font-medium">Family Session</p>
-                </div>
-                <div class="group cursor-pointer" onclick="window.location.href='portfolio.html'">
+                </a>
+                <a href="portfolio.html" class="group cursor-pointer block" title="Lihat Detail Portfolio">
                   <div class="overflow-hidden aspect-[4/3] mb-4 border border-white/20 shadow-xl">
                     <img src="assets/img/diva (15).webp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" alt="Diva Graduation Moment">
                   </div>
-                  <h3 class="font-serif text-xl italic text-gray-200 group-hover:text-white transition-colors drop-shadow-md">Diva's Grads</h3>
+                  <div class="font-serif text-xl italic text-gray-200 group-hover:text-white transition-colors drop-shadow-md">Diva's Grads</div>
                   <p class="text-xs text-gray-400 uppercase tracking-widest mt-1 font-medium">Self Session</p>
-                </div>
+                </a>
               </div>
             </div>
           </div>
+
+
           <div class="relative py-24 px-6 md:px-12 border-b border-white/5 overflow-hidden">
             <div class="absolute inset-0 z-0">
               <div class="absolute inset-0 bg-studio-black/70 z-10"></div>
@@ -165,7 +176,7 @@
               <h2 class="font-serif text-3xl md:text-4xl italic mb-12 drop-shadow-md">Popular Packages</h2>
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left">
                 <div class="bg-black/60 backdrop-blur-md p-6 border border-white/10 hover:border-studio-gold transition-colors duration-300 group shadow-lg">
-                  <h3 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Self Session</h3>
+                  <div class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Self Session</div>
                   <p class="text-xs text-gray-400 mb-4 h-8">Perfect for personal graduation portraits.</p>
                   <div class="border-t border-white/10 pt-4 mt-auto">
                     <span class="text-xs text-gray-400 uppercase">Starts from</span>
@@ -174,7 +185,7 @@
                 </div>
                 <div class="bg-black/60 backdrop-blur-md p-6 border border-white/10 hover:border-studio-gold transition-colors duration-300 group relative overflow-hidden shadow-lg">
                   <div class="absolute top-0 right-0 bg-studio-gold text-black text-[10px] px-2 py-1 font-bold uppercase">Best Seller</div>
-                  <h3 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Group Session</h3>
+                  <div class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Group Session</div>
                   <p class="text-xs text-gray-400 mb-4 h-8">Fun session with your best friends.</p>
                   <div class="border-t border-white/10 pt-4 mt-auto">
                     <span class="text-xs text-gray-400 uppercase">Starts from</span>
@@ -182,7 +193,7 @@
                   </div>
                 </div>
                 <div class="bg-black/60 backdrop-blur-md p-6 border border-white/10 hover:border-studio-gold transition-colors duration-300 group shadow-lg">
-                  <h3 class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Prewedding</h3>
+                  <div class="font-serif text-xl mb-2 text-gray-200 group-hover:text-white">Prewedding</div>
                   <p class="text-xs text-gray-400 mb-4 h-8">Timeless memories for your journey.</p>
                   <div class="border-t border-white/10 pt-4 mt-auto">
                     <span class="text-xs text-gray-400 uppercase">Starts from</span>
@@ -190,41 +201,103 @@
                   </div>
                 </div>
               </div>
-              <button onclick="window.location.href='services.html'" class="bg-white text-black px-8 py-3 text-xs uppercase tracking-widest hover:bg-studio-gold hover:text-white transition-all duration-300 shadow-lg font-bold"> See Full Pricelist </button>
+              <a href="services.html" class="inline-block bg-white text-black px-8 py-3 text-xs uppercase tracking-widest hover:bg-studio-gold hover:text-white transition-all duration-300 shadow-lg font-bold" title="Lihat Pricelist Lengkap"> See Full Pricelist </a>
             </div>
           </div>
-          <div class="relative py-32 px-6 md:px-12 overflow-hidden">
+
+          <div class="relative py-24 px-6 md:px-12 border-b border-white/5 bg-studio-black overflow-hidden">
+            
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-studio-black/80 z-10"></div>
+                <img src="assets/img/diva (15).webp" class="w-full h-full object-cover opacity-30 grayscale" alt="Background Texture" loading="lazy">
+            </div>
+
+            <div class="relative z-10 max-w-5xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-xs text-studio-gold tracking-widest uppercase mb-4 block font-bold drop-shadow-md">Information</span>
+                    <h2 class="font-serif text-3xl md:text-4xl italic text-white drop-shadow-md">Frequently Asked Questions</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 text-left">
+                    
+                    <div class="group border-l border-white/10 pl-6 hover:border-studio-gold transition-colors duration-300">
+                        <h3 class="font-serif text-xl text-white mb-3 group-hover:text-studio-gold transition-colors">
+                            Apakah melayani foto di luar Malang?
+                        </h3>
+                        <p class="font-sans text-sm text-gray-400 leading-relaxed">
+                            Tentu! Kami sangat sering melayani klien di <strong>Surabaya, Kediri, dan Tulungagung</strong>. Akan dikenakan biaya transportasi tambahan yang terjangkau sesuai jarak lokasi.
+                        </p>
+                    </div>
+
+                    <div class="group border-l border-white/10 pl-6 hover:border-studio-gold transition-colors duration-300">
+                        <h3 class="font-serif text-xl text-white mb-3 group-hover:text-studio-gold transition-colors">
+                            Bagaimana prosedur booking jadwal?
+                        </h3>
+                        <p class="font-sans text-sm text-gray-400 leading-relaxed">
+                            Cek ketersediaan via WhatsApp. Jika slot aman, isi form booking dan lakukan pembayaran <strong>DP 50%</strong>. Pelunasan dilakukan setelah sesi foto selesai.
+                        </p>
+                    </div>
+
+                    <div class="group border-l border-white/10 pl-6 hover:border-studio-gold transition-colors duration-300">
+                        <h3 class="font-serif text-xl text-white mb-3 group-hover:text-studio-gold transition-colors">
+                            Berapa lama proses editing foto?
+                        </h3>
+                        <p class="font-sans text-sm text-gray-400 leading-relaxed">
+                            Softfile (foto asli) dikirim maksimal 1x24 jam. Proses editing (tone & color) memakan waktu maksimal <strong>5 hari kerja</strong> setelah Anda memilih foto favorit.
+                        </p>
+                    </div>
+
+                    <div class="group border-l border-white/10 pl-6 hover:border-studio-gold transition-colors duration-300">
+                        <h3 class="font-serif text-xl text-white mb-3 group-hover:text-studio-gold transition-colors">
+                            Bisa request konsep foto?
+                        </h3>
+                        <p class="font-sans text-sm text-gray-400 leading-relaxed">
+                            Sangat bisa. Baik itu konsep <em>studio minimalis</em> atau <em>outdoor</em> yang ceria, fotografer kami akan membantu mengarahkan gaya agar hasil tetap natural.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+
+
+          <div class="relative py-24 px-6 md:px-12 overflow-hidden border-b border-white/5">
             <div class="absolute inset-0 z-0">
               <div class="absolute inset-0 bg-studio-black/60 z-10"></div>
               <img src="assets/img/fadel (16).webp" class="w-full h-full object-cover grayscale opacity-60" loading="lazy" alt="Graduation Celebration">
             </div>
             <div class="relative z-10 max-w-4xl mx-auto text-center">
               <h2 class="font-serif text-4xl md:text-6xl italic mb-6 drop-shadow-lg">Ready to make memories?</h2>
-              <p class="text-gray-300 font-sans text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed font-medium drop-shadow-md"> Jadwal kami terisi dengan cepat. Amankan tanggal spesial Anda sekarang dan biarkan kami mengabadikan ceritanya. </p>
+              <p class="text-gray-300 font-sans text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed font-medium drop-shadow-md"> 
+                Sebagai partner terbaik untuk <strong>Foto Wisuda Malang</strong> dan <strong>Surabaya</strong>, jadwal kami terisi dengan cepat. Amankan tanggal spesial Anda sekarang.
+              </p>
               <div class="flex flex-col md:flex-row justify-center gap-6">
-                <button onclick="window.location.href='contact.html'" class="border border-white/60 px-8 py-4 text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm font-bold shadow-lg"> Contact Us </button>
-                <button onclick="window.open('https://www.whatsapp.com/catalog/62881026774401/?app_absent=0', '_blank')" class="bg-studio-gold text-black px-8 py-4 text-xs uppercase tracking-widest hover:bg-white transition-all duration-300 font-bold shadow-lg"> Chat WhatsApp </button>
+                <a href="contact.html" class="inline-block border border-white/60 px-8 py-4 text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm font-bold shadow-lg" title="Halaman Kontak"> Contact Us </a>
+                <a href="https://wa.me/62881026774401" target="_blank" rel="noopener noreferrer" class="inline-block bg-studio-gold text-black px-8 py-4 text-xs uppercase tracking-widest hover:bg-white transition-all duration-300 font-bold shadow-lg" title="Chat WhatsApp"> Chat WhatsApp </a>
               </div>
             </div>
           </div>
-          <div class="h-24 bg-studio-black"></div>
+
+
+
+
+          <div class="h-12 bg-studio-black"></div>
         </div>
       </section>
-
-      </main>
+    </main>
 
     <div id="terms-modal" class="fixed inset-0 z-[60] hidden">
       <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="toggleTerms()"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-[80vh] bg-studio-gray border border-white/10 rounded-xl shadow-2xl overflow-hidden flex flex-col">
         <div class="px-8 py-6 border-b border-white/5 flex justify-between items-center bg-studio-black">
-          <h3 class="font-serif text-xl italic text-studio-gold">Prosedur, Syarat & Ketentuan</h3>
+          <div class="font-serif text-xl italic text-studio-gold font-bold">Prosedur, Syarat & Ketentuan</div>
           <button onclick="toggleTerms()" class="text-gray-400 hover:text-white transition-colors">
             <i class="fa-solid fa-xmark text-xl"></i>
           </button>
         </div>
         <div class="p-8 overflow-y-auto font-sans text-sm text-gray-300 leading-relaxed space-y-8 custom-scrollbar" data-lenis-prevent>
           <div>
-            <h4 class="text-white font-bold uppercase tracking-widest mb-4 border-l-2 border-studio-gold pl-3">Syarat & Ketentuan Pemesanan</h4>
+            <div class="text-white font-bold uppercase tracking-widest mb-4 border-l-2 border-studio-gold pl-3 text-base">Syarat & Ketentuan Pemesanan</div>
             <ol class="list-decimal list-outside pl-5 space-y-4">
               <li>
                 <strong class="text-white block mb-1">Cek Jadwal Tersedia</strong> Pastikan tanggal dan jam sesi yang diinginkan masih available sebelum melakukan pemesanan.
@@ -238,34 +311,13 @@
               <li>
                 <strong class="text-white block mb-1">Pelunasan Setelah Sesi</strong> Sisa pembayaran dilakukan setelah sesi foto selesai.
               </li>
-              <li>
-                <strong class="text-white block mb-1">Ketepatan Waktu</strong> Harap datang tepat waktu, karena keterlambatan menjadi tanggung jawab klien dan tidak ada tambahan waktu sesi.
-              </li>
-              <li>
-                <strong class="text-white block mb-1">Pengiriman & Pemilihan Foto</strong> Seluruh file foto (JPEG) dikirim maksimal 1 hari setelah sesi. Client dapat memilih nomor file foto yang ingin diedit sejak softfile dikirim.
-              </li>
-              <li>
-                <strong class="text-white block mb-1">Waktu Proses Editing</strong> Proses editing memakan waktu maksimal 5 hari kerja.
-              </li>
-              <li>
-                <strong class="text-white block mb-1">Penyimpanan File</strong> File foto disimpan di Google Drive maksimal 14 hari. Kehilangan file setelah masa tersebut bukan tanggung jawab kami.
-              </li>
-            </ol>
+              </ol>
           </div>
           <div>
-            <h4 class="text-white font-bold uppercase tracking-widest mb-4 border-l-2 border-studio-gold pl-3">Ketentuan Tambahan</h4>
+            <div class="text-white font-bold uppercase tracking-widest mb-4 border-l-2 border-studio-gold pl-3 text-base">Ketentuan Tambahan</div>
             <ul class="list-disc list-outside pl-5 space-y-4">
               <li>
                 <strong class="text-white block mb-1">Non-Refundable DP</strong> DP yang sudah dibayarkan tidak dapat dikembalikan dengan alasan apapun.
-              </li>
-              <li>
-                <strong class="text-white block mb-1">Konfirmasi Jadwal</strong> Jadwal pemotretan wajib dikonfirmasi ulang untuk menghindari perubahan mendadak.
-              </li>
-              <li>
-                <strong class="text-white block mb-1">Waktu Mulai</strong> Tim Aksara akan memulai pemotretan tepat waktu sesuai kesepakatan.
-              </li>
-              <li>
-                <strong class="text-white block mb-1">Natural Editing</strong> Editing hanya sebatas warna, tone, dan pencahayaan. Tidak menerima request perubahan bentuk tubuh.
               </li>
               <li>
                 <strong class="text-white block mb-1">Biaya Transportasi</strong> Pemotretan luar kota (Kediri, Tulungagung, Surabaya) dikenakan biaya transport Rp 50.000.
@@ -284,7 +336,7 @@
         <div class="max-w-6xl mx-auto">
           <div class="text-center mb-16 pt-10 animate-fade-in-up">
             <span id="modal-category" class="text-xs text-studio-gold tracking-widest uppercase mb-4 block">Editorial</span>
-            <h2 id="modal-title" class="font-serif text-4xl md:text-6xl italic text-white">Project Title</h2>
+            <div id="modal-title" class="font-serif text-4xl md:text-6xl italic text-white font-bold">Project Title</div>
           </div>
           <div id="modal-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8"></div>
           <div class="text-center mt-24">
