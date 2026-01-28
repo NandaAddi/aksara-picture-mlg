@@ -4,18 +4,18 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 // Variable Global Client
 // Variabel 'sb' ini bisa diakses di file HTML lain (blog.html / article.html)
-let sb = null; 
-let lenis; 
-let projectsData = {}; 
+let sb = null;
+let lenis;
+let projectsData = {};
 
 // Inisialisasi Supabase Client
 try {
     // Cek apakah library Supabase sudah terload dari CDN
     if (typeof window.supabase !== 'undefined') {
-         sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-         console.log("Supabase Client Ready");
+        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log("Supabase Client Ready");
     } else {
-         console.warn("Library Supabase belum terload. Pastikan script CDN ada di <head>.");
+        console.warn("Library Supabase belum terload. Pastikan script CDN ada di <head>.");
     }
 } catch (e) {
     console.error("Gagal menginisialisasi Supabase:", e);
@@ -31,7 +31,7 @@ async function loadProjects() {
 
     // Skeleton Loading
     let skeletonHTML = '';
-    for(let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
         skeletonHTML += `
         <div class="aspect-[3/4] bg-gray-900 animate-pulse relative overflow-hidden rounded-sm">
             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 translate-x-[-100%] animate-[shimmer_1.5s_infinite]"></div>
@@ -68,7 +68,7 @@ async function loadProjects() {
                     .filter(img => img.project_id === proj.id)
                     .map(img => ({
                         src: img.image_url,
-                        aspect: img.aspect_ratio 
+                        aspect: img.aspect_ratio
                     }));
 
                 projectsData[proj.slug] = {
@@ -88,11 +88,11 @@ async function loadProjects() {
 function renderPortfolioGrid(projList, imgList) {
     const gridContainer = document.getElementById('portfolio-grid');
     if (!gridContainer) return;
-    
-    let cardsHtml = ''; 
+
+    let cardsHtml = '';
     projList.forEach((proj) => {
         const thumb = imgList.find(img => img.project_id === proj.id);
-        const thumbUrl = thumb ? thumb.image_url : 'assets/img/placeholder.jpg'; 
+        const thumbUrl = thumb ? thumb.image_url : 'assets/img/placeholder.jpg';
         const isLandscape = thumb && thumb.aspect_ratio > 1;
         const aspectClass = isLandscape ? 'aspect-[4/3]' : 'aspect-[3/4]';
 
@@ -110,7 +110,7 @@ function renderPortfolioGrid(projList, imgList) {
         `;
     });
     gridContainer.innerHTML = cardsHtml;
-    
+
     // Auto Filter Trigger
     setTimeout(() => {
         const activeBtn = document.querySelector('.filter-btn.active');
@@ -118,7 +118,7 @@ function renderPortfolioGrid(projList, imgList) {
         filterSelection(currentCategory);
     }, 100);
 
-    if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 }
 
 function filterSelection(category) {
@@ -138,10 +138,10 @@ function filterSelection(category) {
         if (category === 'all' || item.dataset.category === category) {
             gsap.to(item, { display: 'block', opacity: 1, scale: 1, duration: 0.4 });
         } else {
-            gsap.to(item, { opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => { item.style.display = 'none'; }});
+            gsap.to(item, { opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => { item.style.display = 'none'; } });
         }
     });
-    if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 }
 
 // ==========================================
@@ -152,14 +152,14 @@ function openProject(projectSlug) {
     const modal = document.getElementById('project-modal');
     if (!modal) return;
 
-    const project = projectsData[projectSlug]; 
+    const project = projectsData[projectSlug];
     if (!project) return;
 
     const titleEl = document.getElementById('modal-title');
     const catEl = document.getElementById('modal-category');
-    if(titleEl) titleEl.textContent = project.title;
-    if(catEl) catEl.textContent = project.category;
-    
+    if (titleEl) titleEl.textContent = project.title;
+    if (catEl) catEl.textContent = project.category;
+
     const galleryContainer = document.getElementById('modal-gallery');
     if (galleryContainer) {
         const fragment = document.createDocumentFragment();
@@ -171,16 +171,16 @@ function openProject(projectSlug) {
             div.innerHTML = `<img src="${img.src}" alt="${project.title}" class="w-full h-full object-cover" loading="lazy">`;
             fragment.appendChild(div);
         });
-        galleryContainer.innerHTML = ''; 
+        galleryContainer.innerHTML = '';
         galleryContainer.appendChild(fragment);
     }
 
     modal.classList.remove('hidden');
-    if(lenis) lenis.stop(); 
-    
+    if (lenis) lenis.stop();
+
     gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.4 });
     const galleryDivs = document.querySelectorAll("#modal-gallery > div");
-    if(galleryDivs.length > 0) {
+    if (galleryDivs.length > 0) {
         gsap.killTweensOf(galleryDivs);
         gsap.fromTo(galleryDivs, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, delay: 0.2 });
     }
@@ -188,8 +188,8 @@ function openProject(projectSlug) {
 
 function closeProject() {
     const modal = document.getElementById('project-modal');
-    if(!modal) return;
-    gsap.to(modal, { opacity: 0, duration: 0.3, onComplete: () => { modal.classList.add('hidden'); if(lenis) lenis.start(); } });
+    if (!modal) return;
+    gsap.to(modal, { opacity: 0, duration: 0.3, onComplete: () => { modal.classList.add('hidden'); if (lenis) lenis.start(); } });
 }
 
 // ==========================================
@@ -200,29 +200,29 @@ function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     const icon = document.getElementById('mobile-menu-icon');
     if (!menu) return;
-    
+
     if (menu.classList.contains('pointer-events-none')) {
         menu.classList.remove('pointer-events-none', 'opacity-0');
-        document.body.style.overflow = 'hidden'; 
-        if(icon) { icon.classList.remove('fa-bars-staggered'); icon.classList.add('fa-xmark'); icon.style.transform = 'rotate(90deg)'; }
+        document.body.style.overflow = 'hidden';
+        if (icon) { icon.classList.remove('fa-bars-staggered'); icon.classList.add('fa-xmark'); icon.style.transform = 'rotate(90deg)'; }
     } else {
         menu.classList.add('pointer-events-none', 'opacity-0');
-        document.body.style.overflow = ''; 
-        if(icon) { icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars-staggered'); icon.style.transform = 'rotate(0deg)'; }
+        document.body.style.overflow = '';
+        if (icon) { icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars-staggered'); icon.style.transform = 'rotate(0deg)'; }
     }
 }
 
 function toggleTerms() {
     const modal = document.getElementById('terms-modal');
     if (!modal) return;
-    
+
     if (modal.classList.contains('hidden')) {
         modal.classList.remove('hidden');
-        if(lenis) lenis.stop();
-        if(modal.children[1]) gsap.fromTo(modal.children[1], { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
+        if (lenis) lenis.stop();
+        if (modal.children[1]) gsap.fromTo(modal.children[1], { scale: 0.95, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
     } else {
-        if(lenis) lenis.start();
-        if(modal.children[1]) gsap.to(modal.children[1], { scale: 0.95, opacity: 0, duration: 0.2, onComplete: () => modal.classList.add('hidden') });
+        if (lenis) lenis.start();
+        if (modal.children[1]) gsap.to(modal.children[1], { scale: 0.95, opacity: 0, duration: 0.2, onComplete: () => modal.classList.add('hidden') });
         else modal.classList.add('hidden');
     }
 }
@@ -240,7 +240,7 @@ function handleWA(e) {
 
 function startHeroSlideshow() {
     const slides = document.querySelectorAll('.hero-slide');
-    if(slides.length === 0) return; 
+    if (slides.length === 0) return;
 
     let currentSlide = 0;
     slides.forEach((slide, index) => {
@@ -252,7 +252,40 @@ function startHeroSlideshow() {
         slides[currentSlide].classList.remove('active');
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
-    }, 5000); 
+    }, 5000);
+}
+
+// ==========================================
+// 5. FAQ ACCORDION LOGIC
+// ==========================================
+function toggleFAQ(element) {
+    const parent = element.parentElement;
+    const content = parent.querySelector('.faq-content');
+    const icon = parent.querySelector('.faq-icon');
+
+    // Check if already open
+    const isOpen = parent.classList.contains('active');
+
+    // Close other FAQ items (Auto-collapse)
+    const allItems = document.querySelectorAll('.faq-item');
+    allItems.forEach(item => {
+        if (item !== parent && item.classList.contains('active')) {
+            item.classList.remove('active');
+            gsap.to(item.querySelector('.faq-content'), { height: 0, opacity: 0, duration: 0.3, ease: "power2.in" });
+            gsap.to(item.querySelector('.faq-icon'), { rotation: 0, color: "", duration: 0.3 });
+        }
+    });
+
+    // Toggle current item
+    if (!isOpen) {
+        parent.classList.add('active');
+        gsap.to(content, { height: 'auto', opacity: 1, duration: 0.4, ease: "power2.out" });
+        gsap.to(icon, { rotation: 45, color: "#d4af37", duration: 0.3 }); // #d4af37 is studio-gold
+    } else {
+        parent.classList.remove('active');
+        gsap.to(content, { height: 0, opacity: 0, duration: 0.3, ease: "power2.in" });
+        gsap.to(icon, { rotation: 0, color: "", duration: 0.3 });
+    }
 }
 
 // ==========================================
@@ -269,24 +302,42 @@ window.addEventListener('load', () => {
 
     // 2. Global Page Fade In
     const activeSection = document.querySelector('.page-section');
-    if(activeSection) gsap.fromTo(activeSection, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" });
+    if (activeSection) gsap.fromTo(activeSection, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" });
 
     // 3. Conditional Logic per Page
     if (document.getElementById('home')) startHeroSlideshow();
     if (document.getElementById('portfolio-grid')) loadProjects();
-    
+
     // Services Page Animation
     if (document.getElementById('services')) {
         const priceItems = document.querySelectorAll('.group');
-        if(priceItems.length > 0) gsap.from(priceItems, { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 });
+        if (priceItems.length > 0) gsap.from(priceItems, { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 });
     }
-    
+
     // Contact Page Animation
     if (document.getElementById('contact')) {
         const formContainer = document.querySelector('form');
-        if(formContainer) gsap.from(formContainer.parentElement, { x: 50, opacity: 0, duration: 0.8, ease: "power2.out", delay: 0.3 });
+        if (formContainer) gsap.from(formContainer.parentElement, { x: 50, opacity: 0, duration: 0.8, ease: "power2.out", delay: 0.3 });
     }
 
-    
-    
+    // FAQ Animation (ScrollTrigger)
+    if (document.getElementById('faq-accordion')) {
+        const faqItems = document.querySelectorAll('.faq-item');
+        if (faqItems.length > 0) {
+            gsap.from(faqItems, {
+                scrollTrigger: {
+                    trigger: "#faq-accordion",
+                    start: "top 80%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+        }
+    }
+
+
+
 });
