@@ -146,7 +146,8 @@ export default async function ArticlePage({ params }: Props) {
           alt="Background"
           fill
           priority
-          sizes="100vw"
+          sizes="50vw"
+          quality={50}
           className="object-cover opacity-40 grayscale"
         />
       </div>

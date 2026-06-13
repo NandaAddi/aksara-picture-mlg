@@ -86,7 +86,8 @@ export default function Home() {
                 src="/assets/img/14.webp"
                 alt="Background Texture"
                 fill
-                sizes="100vw"
+                sizes="33vw"
+                quality={50}
                 className="object-cover opacity-60 grayscale"
               />
             </div>
@@ -114,7 +115,8 @@ export default function Home() {
                       src="/assets/img/iola (5).webp"
                       alt="Iola Graduation Moment"
                       fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 576px"
+                      quality={70}
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
@@ -131,7 +133,8 @@ export default function Home() {
                       src="/assets/img/diva (15).webp"
                       alt="Diva Graduation Moment"
                       fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 576px"
+                      quality={70}
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
@@ -229,7 +232,8 @@ export default function Home() {
                 src="/assets/img/diva (15).webp"
                 alt="Background Texture"
                 fill
-                sizes="100vw"
+                sizes="33vw"
+                quality={50}
                 className="object-cover opacity-30 grayscale"
               />
             </div>
@@ -254,7 +258,8 @@ export default function Home() {
                 src="/assets/img/fadel (16).webp"
                 alt="Graduation Celebration"
                 fill
-                sizes="100vw"
+                sizes="50vw"
+                quality={50}
                 className="object-cover grayscale opacity-60"
               />
             </div>

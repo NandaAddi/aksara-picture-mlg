@@ -41,8 +41,9 @@ export default function ContactClient() {
           src="/assets/img/1.webp"
           alt="Contact Background"
           fill
-          sizes="100vw"
+          sizes="50vw"
           priority
+          quality={50}
           className="object-cover opacity-30 grayscale"
         />
       </div>

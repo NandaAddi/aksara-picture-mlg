@@ -32,8 +32,9 @@ export default function ServicesClient() {
           src="/assets/img/vz2.webp"
           alt="Services Background"
           fill
-          sizes="100vw"
+          sizes="50vw"
           priority
+          quality={50}
           className="object-cover opacity-30 grayscale"
         />
       </div>

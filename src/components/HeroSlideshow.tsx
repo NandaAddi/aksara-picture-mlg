@@ -51,7 +51,8 @@ export default function HeroSlideshow() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
-                sizes="(min-width: 768px) 100vw, 1px"
+                quality={70}
+                sizes="100vw"
                 className="object-cover"
               />
             </div>
@@ -62,7 +63,8 @@ export default function HeroSlideshow() {
                 alt={slide.alt}
                 fill
                 priority={index === 0}
-                sizes="(max-width: 767px) 100vw, 1px"
+                quality={70}
+                sizes="100vw"
                 className="object-cover"
               />
             </div>
