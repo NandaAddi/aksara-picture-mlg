@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `/blog/${slug}`,
       images: [
         {
-          url: article.thumbnail_url || '/assets/img/hz1.webp',
+          url: article.thumbnail_url || '/og-image.webp',
           alt: article.title,
         },
       ],
@@ -109,7 +109,7 @@ export default async function ArticlePage({ params }: Props) {
     '@type': 'BlogPosting',
     'headline': article.title,
     'description': article.excerpt || '',
-    'image': article.thumbnail_url || 'https://aksarapicture.web.id/assets/img/hz1.webp',
+    'image': article.thumbnail_url || 'https://aksarapicture.web.id/og-image.webp',
     'datePublished': article.created_at,
     'author': {
       '@type': 'Person',
@@ -120,7 +120,7 @@ export default async function ArticlePage({ params }: Props) {
       'name': 'Aksara Picture',
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://aksarapicture.web.id/assets/img/favicon.png',
+        'url': 'https://aksarapicture.web.id/favicon/apple-touch-icon.png',
       },
     },
     'mainEntityOfPage': {

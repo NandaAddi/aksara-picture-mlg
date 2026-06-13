@@ -8,7 +8,7 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     'name': 'Aksara Picture',
-    'image': 'https://aksarapicture.web.id/assets/img/hz1.webp',
+    'image': 'https://aksarapicture.web.id/og-image.webp',
     '@id': 'https://aksarapicture.web.id',
     'url': 'https://aksarapicture.web.id',
     'telephone': '+62881026774401',

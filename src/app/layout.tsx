@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     description: 'Spesialis foto wisuda dan couple session di Jawa Timur. Cek portofolio kami!',
     images: [
       {
-        url: '/assets/img/hz1.webp',
+        url: '/og-image.webp',
         width: 1200,
         height: 630,
         alt: 'Aksara Picture Showcase',
@@ -64,12 +64,19 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Aksara Picture Malang',
     description: 'Jasa dokumentasi wisuda terbaik di Jawa Timur.',
-    images: ['/assets/img/hz1.webp'],
+    images: ['/og-image.webp'],
   },
   icons: {
-    icon: '/assets/img/favicon.png',
-    apple: '/assets/img/favicon.png',
+    icon: [
+      { url: '/favicon/favicon.ico', sizes: 'any' },
+      { url: '/favicon/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
+  manifest: '/favicon/site.webmanifest',
 };
 
 export default function RootLayout({
